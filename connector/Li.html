@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>로그인</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="Li.css">
+  <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+</head>
+<body>
+  <div class="login-form">
+    <form method="POST",action="server.js">
+        <h2>LOGIN</h2>
+      <input  id = "id" type="text" name="email" class="text-field" placeholder="ID">
+      <input id="pw" type="password" name="password" class="text-field" placeholder="PW"><br>
+      <input type="submit" value="LOGIN" class="submit-btn"/>
+    </form>
+    <div class="links">
+      <a href="/register">sign up</a>
+      <br>
+      <a href="/findid">FindID</a>&nbsp;&nbsp;<a href="/findpw">FindPW</a>
+    </div>
+  </div>
+  <div id='result'></div>
+  <script>
+</script>
+</body>
+</html>

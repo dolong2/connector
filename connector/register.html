@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Li.css">
+    <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+    <title>Sign Up</title>
+</head>
+<body>
+    <div class="login-form">
+        <form method="POST",action="./signin">
+            <h2>Sign Up</h2>
+          <input  id = "id" type="text" name="name" class="text-field" placeholder="아이디">
+          <input id="pw" type="password" name="password" class="text-field" placeholder="패스워드"><br>
+          <input id="name" type="text" name="name" class="text-field" placeholder="이름" maxlength="4"><br>
+          <select name=jockey class="dropdown">
+            <option value="3기">3기</option>
+            <option value="4기">4기</option>
+            <option value="5기">5기</option>
+          </select><br>
+          <input type="submit" value="Sign In" class="submit-btn">
+        </form>
+      </div>
+    <div id='result'></div>
+</body>
+</html>

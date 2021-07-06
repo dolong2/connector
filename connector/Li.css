@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+    border-radius: 30px;
+  }
+   
+  body {
+    margin: 0;
+    background-color: white;
+  }
+   
+  .login-form {
+      width: 500px;
+      background-color: #EEEFF1;
+      margin-right: auto;
+      margin-left: auto;
+      margin-top: 150px;
+      padding: 20px;
+      text-align: center;
+      border: none;
+      
+  }
+   
+  .text-field {
+        font-size: 14px;
+        padding: 10px;
+        border: none;
+        width: 260px;
+        margin-bottom: 10px;
+  }
+
+  .dropdown {
+    font-size: 14px;
+    padding: 10px;
+    border: none;
+    width: 160px;
+    margin-bottom: 10px;
+  }
+
+  .submit-btn {
+    font-size: 14px;
+    border: none;
+    padding: 10px;
+    width: 260px;
+    background-color: rgb(253, 247, 167);
+    margin-bottom: 30px;
+    color: rgb(83, 83, 83);
+  }
+  
+   
+  .links {
+      text-align: center;
+  }
+   
+  .links a {
+    font-size: 12px;
+    color: #757575;
+  }
+  .links-b{
+    margin-left: 40px;
+  }
+  .find-btn {
+    font-size: 14px;
+    border: none;
+    padding: 10px;
+    width: 200px;
+    background-color: rgb(253, 247, 167);
+    margin-bottom: 30px;
+    color: rgb(83, 83, 83);
+  }
