@@ -79,8 +79,9 @@ server.post('/register',function(request,response){
                     pw=key.toString('base64');
                     console.log(data);
                     console.log(data.email,pw,data.name,data.jockey,salt);
-                    user.query('insert into user value(?,?,?,?,?)',[data.email,pw,data.name,data.jockey,salt],function(err,result){
+                    user.query('insert into user value(?,?,?,?,?,?)',[data.email,pw,data.name,data.jockey,salt,null],function(err,result){
                         if(err){
+                            console.log(err);
                             response.writeHead(200,{"Content-Type":"text/html"});
                             response.write(register);
                             response.end("<script>alert('중복되는 아이디가 존재합니다.');</script>");
@@ -97,6 +98,26 @@ server.get('/findid',function(request,response){
     response.writeHead(200,{"Content-Type":"text/html"});
     response.write(findid);
     response.end();
+});
+server.post('/findid',function(request,response){
+    request.on('data',function(oreder){
+        var data=querystring.parse(oreder.toString());
+        user.query("select name from user where name=? and jockey=?",[data.name,data.jockey],function(err,result){
+            if(err){
+                response.writeHead(200,{"Content-Type":"text/html"});
+                response.write(login);
+                response.end("<script>alert('등록된 유저가 아닙니다 회원가입을 시도해 보세요');</script>");
+            }
+            else{
+                user.query("select pw from user where name=? and jockey=?",[data.name,data.jockey],function(err,result){
+                    var pw=JSON.stringify(result);
+                    console.log(pw);
+                });
+            }
+        })
+        console.log("name=",data.name);
+        console.log("pw=",data.password);
+    });
 });
 server.get('/findpw',function(request,response){
     response.redirect('/findpw.html');

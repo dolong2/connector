@@ -10,11 +10,15 @@
 </head>
 <body>
     <div class="login-form">
-        <form action="./checkid" id="find_id" method="POST">
+        <form action="./findid" id="find_id" method="POST">
             <h2>아이디 찾기</h2>
-            <input type="text" id="input_name" name="name"maxlength=4 required placeholder="이름입력"class="text-field">
-            <br>
+            <input type="text" id="input_name" name="name"maxlength="4" required placeholder="이름입력"class="text-field"><br>
             <input type="password" id="input_pw" name="password"required placeholder="PW입력"class="text-field"><br>
+            <select name="jockey" class="dropdown">
+                <option value="3기">3기</option>
+                <option value="4기">4기</option>
+                <option value="5기">5기</option>
+            </select><br>
             <input type="submit" id="find_id_form" value="제출"class="submit-btn">
     </form>
     </div>
