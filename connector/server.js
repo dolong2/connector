@@ -73,45 +73,31 @@ server.post('/register',function(request,response){
         console.log(oreder.toString());
             var data=querystring.parse(oreder.toString());
             var pw,salt;
-            if(data.email==''||data.password==''||data.name==''||data.jockey==''){
-                response.writeHead(200,{"Content-Type":"text/html"});
-                response.write(register);
-                response.end("<script>alert('정보를 덜 입력하셨습니다.');</script>");
-            }
-            else{
-                crypto.randomBytes(64, (err, buf) => {
-                        crypto.pbkdf2(data.password, buf.toString('base64'), 100000, 64, 'sha512', (err, key) => {
-                        salt=buf.toString('base64');
-                        pw=key.toString('base64');
-                        console.log(data);
-                        console.log(data.email,pw,data.name,data.jockey,salt);
-                        user.query('insert into user value(?,?,?,?,?)',[data.email,pw,data.name,data.jockey,salt],function(err,result){
-                            if(err){
-                                response.writeHead(200,{"Content-Type":"text/html"});
-                                response.write(register);
-                                response.end("<script>alert('중복되는 아이디가 존재합니다.');</script>");
-                            }
-                            else {
-                                //response.redirect("/");
-                                response.writeHead(200,{"Content-Type":"text/html"});
-                                response.write(Li);
-                                response.end("<script>alert('중복되는 아이디가 존재합니다.');</script>");
-                            }
-                        });
+            crypto.randomBytes(64, (err, buf) => {
+                crypto.pbkdf2(data.password, buf.toString('base64'), 100000, 64, 'sha512', (err, key) => {
+                    salt=buf.toString('base64');
+                    pw=key.toString('base64');
+                    console.log(data);
+                    console.log(data.email,pw,data.name,data.jockey,salt);
+                    user.query('insert into user value(?,?,?,?,?)',[data.email,pw,data.name,data.jockey,salt],function(err,result){
+                        if(err){
+                            response.writeHead(200,{"Content-Type":"text/html"});
+                            response.write(register);
+                            response.end("<script>alert('중복되는 아이디가 존재합니다.');</script>");
+                        }
+                        else {
+                            response.redirect("/");
+                        }
                     });
                 });
-            }
+            });
     });
 });
 server.get('/findid',function(request,response){
-    response.redirect('/checkid');
+    response.writeHead(200,{"Content-Type":"text/html"});
+    response.write(findid);
+    response.end();
 });
 server.get('/findpw',function(request,response){
-    response.redirect('/checkid');
-});
-server.post('/checkid',function(request,response){
-    request.on('data', function(oreder){
-        var data = querystring.parse(oreder.toString());
-    });
-    response.redirect("/findid");
+    response.redirect('/findpw.html');
 });
