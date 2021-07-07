@@ -2,15 +2,16 @@ const express=require('express');
 const fs=require('fs');
 const querystring=require("querystring");
 const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 
 var mysql=require("mysql");
-const { response } = require('express');
+//const { response } = require('express');
 
 var Li;
 var css;
 var register;
 var findid;
-var findpw;
+var findpw,findpw1,findpw2;
 fs.readFile('Li.html','utf8',function(err,data){
     if(err){
         return console.error(err);
@@ -41,6 +42,18 @@ fs.readFile('findpw.html','utf8',function(err,data){
     }
     findpw=data;
 });
+fs.readFile('findpw1.html','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    findpw1=data;
+});
+fs.readFile('findpw2.html','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    findpw2=data;
+});
 var db_info = {
     host: 'localhost',
     port: '3306',
@@ -49,7 +62,13 @@ var db_info = {
     database: 'users'
 }
 var user=mysql.createConnection(db_info);
-
+var transporter = nodemailer.createTransport({  // transporter 에서 보낼 메일아이디와 비번 설정
+    service: 'gmail', // 이메일 보내는 서비스 주소
+    auth: {
+        user:'bodercoding@gmail.com',
+        pass:'wety4566@'
+    }
+})
 var server=express();
 server.listen(8080,function(){
     console.log("서버실행");
@@ -71,7 +90,6 @@ server.get('/Li.css',function(request,response){
 });
 server.post('/register',function(request,response){
     request.on('data',function(oreder){
-        console.log(oreder.toString());
             var data=querystring.parse(oreder.toString());
             var pw,salt;
             crypto.randomBytes(64, (err, buf) => {
@@ -158,5 +176,64 @@ server.post('/findid',function(request,response){
     });
 });
 server.get('/findpw',function(request,response){
-    response.redirect('/findpw.html');
+    response.writeHead(200,{"Content-Type":"text/html"});
+    response.write(findpw);
+    response.end();
+});
+server.post('/findpw',function(request,response){
+    request.on('data',function(oreder){
+        var data=querystring.parse(oreder.toString());
+        console.log(data.id);
+        user.query("select id from user where id=?",[data.id],function(err,result){
+            if(err){
+                response.send("<script type='text/javascript'>alert('ㅅㅂ 프로젝트하기 ㅈ같다');document.location.href='/findpw';</script>");
+            }
+            else if(result.length>0){
+                response.redirect('/findpw1');
+            }
+            else{
+                response.send("<script type='text/javascript'>alert('ㅅㅂ 프로젝트하기 ㅈ같다');document.location.href='/findpw';</script>");
+            }
+        });
+    });
+});
+server.get('/findpw1',function(request,response){
+    response.writeHead(200,{"Content-Type":"text/html"});
+    response.write(findpw1);
+    response.end();
+});
+server.post('/findpw1',function(request,response){
+    request.on('data',function(oreder){
+        var data=querystring.parse(oreder.toString());
+        console.log(data.id);
+        user.query("select id from user where id=?",[data.id],function(err,result){
+            if(err){
+                response.send("<script type='text/javascript'>alert('ㅅㅂ 프로젝트하기 ㅈ같다');document.location.href='/findpw';</script>");
+            }
+            else if(result.length>0){
+                response.redirect('/findpw1');
+            }
+        });
+    });
+});
+server.post('/sendemail',async function(request,response){
+    request.on('data',function(oreder){
+        var data=querystring.parse(oreder.toString())
+        console.log(data.email);
+        var mailOption = { // 메일 옵션  설정
+            from: 'k01066624566@gmail.com',  // 보내는사람
+            to: data.emial,
+            subject: '[Connector 이메일 인증]',
+            html: '<p>아래의 링크를 클릭해서 인증해주센!</p>' // html 코드세팅
+        }
+        transporter.sendMail(mailOption, function(err, res){ // 메일 발송
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('이메일발송성공');
+                response.send("<script type='text/javascript'>alert('인증번호가 보내졌습니다');document.location.href='/findpw1';</script>");
+            }
+            transporter.close();
+        })
+    });
 });
