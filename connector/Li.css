@@ -68,3 +68,6 @@
     margin-bottom: 30px;
     color: rgb(83, 83, 83);
   }
+  a:visited{
+    color: black;
+  }

@@ -11,7 +11,6 @@ var css;
 var register;
 var findid;
 var findpw;
-var result_id;
 fs.readFile('Li.html','utf8',function(err,data){
     if(err){
         return console.error(err);
@@ -41,12 +40,6 @@ fs.readFile('findpw.html','utf8',function(err,data){
         return console.error(err);
     }
     findpw=data;
-});
-fs.readFile('resultid.html','utf8',function(err,data){
-    if(err){
-        return console.error(err);
-    }
-    result_id=data;
 });
 var db_info = {
     host: 'localhost',
@@ -85,14 +78,11 @@ server.post('/register',function(request,response){
                 crypto.pbkdf2(data.password, buf.toString('base64'), 100000, 64, 'sha512', (err, key) => {
                     salt=buf.toString('base64');
                     pw=key.toString('base64');
-                    console.log(data);
+                    //console.log(data);
                     console.log(data.email,pw,data.name,data.jockey,salt);
                     user.query('insert into user value(?,?,?,?,?,?)',[data.email,pw,data.name,data.jockey,salt,null],function(err,result){
                         if(err){
-                            console.log(err);
-                            response.writeHead(200,{"Content-Type":"text/html"});
-                            response.write(register);
-                            response.end("<script>alert('중복되는 아이디가 존재합니다.');</script>");
+                            response.send("<script type='text/javascript'>alert('중복되는 아이디가 존재합니다.');document.location.href='/register'</script>");
                         }
                         else {
                             response.redirect("/");
@@ -117,39 +107,56 @@ server.post('/findid',function(request,response){
             else if (result.length > 0) {
                 user.query("select pw from user where name=? and jockey=?",[data.name,data.jockey],function(err,result){
                     if(err){
-                        response.send('<script type="text/javascript">alert("pw가 올바르지 않습니다");document.location.href="/findid";</script>');
+                        response.send('<script type="text/javascript">alert("입력한 정보가 올바르지 않습니다");document.location.href="/findid";</script>');
                     }
                     else {
                         user.query("select salt from user where name=? and jockey=?",[data.name,data.jockey],function(err,res){
-                            if(!err){
+                            if(err){
+                            }
+                            else if(result.length>0){
                                 var salt_temp=JSON.stringify(res);
                                 var salt=salt_temp.split(',');
-                                salt[0]=salt[0].substring(10,salt[0].length-2);
-                                for(var i=1;i<salt.length-2;i++){
-                                    salt[i]=salt[i].substring(9,salt[i].length-2);
+                                if(salt.length==1){
+                                    salt[0]=salt[0].substring(10,salt[0].length-3);    
                                 }
-                                salt[salt.length-1]=salt[salt.length-1].substring(9,salt[i].length-3);
-                                for(var i=0;i<salt.length;i++){
-                                    console.log(salt[i]);
+                                else{
+                                    salt[0]=salt[0].substring(10,salt[0].length-2);
+                                    console.log(salt.length);
+                                    for(var i=1;i<salt.length-2;i++){
+                                        salt[i]=salt[i].substring(9,salt[i].length-2);
+                                    }
+                                    salt[salt.length-1]=salt[salt.length-1].substring(9,salt[i].length-3);
                                 }
+                                crypto.pbkdf2(data.password, salt[0], 100000, 64, 'sha512',function(err, key){
+                                    var hashed = key.toString('base64');
+                                    console.log("hashed_pw:",hashed);
+                                    user.query("select id from user where pw=?",[hashed],function(err,results){
+                                        if(err)response.send('<script type="text/javascript">alert("입력한 패스워드가 일치하지 않습니다");document.location.href="/findid";</script>');
+                                        else if(result.length>0){
+                                            var id_temp=JSON.stringify(results);
+                                            var id=id_temp.split(',');
+                                            id[0]=id[0].substring(8,id[0].length-3);
+                                            console.log(id[0]);
+                                            if(id=='[]'){
+                                                response.send('<script type="text/javascript">alert("입력한 패스워드가 일치하지 않습니다");document.location.href="/findid";</script>');
+                                            }
+                                            else{
+                                                response.send('<script type="text/javascript">alert("아이디는'+id[0]+'입니다");document.location.href="/";</script>');
+                                            }
+                                        }
+                                    });
+                                });
                             }
                         });
-                        //var checkpw=crypto.pbkdf2(data.password, salt, 100000, 64, 'sha512');
                     }
                 });
             } else {              
-                response.send('<script type="text/javascript">alert("로그인 정보가 일치하지 않습니다."); document.location.href="/findid";</script>');
+                
+                response.send('<script type="text/javascript">alert("입력한 정보가 일치하지 않습니다."); document.location.href="/findid";</script>');
             } 
         });
-        console.log("name=",data.name);
-        console.log("pw=",data.password);
     });
 });
-/*server.get('/result_id',function(){
-    response.writeHead(200,{"Content-Type":"text/html"});
-    response.write(result_id);
-    response.end();
-});*/
 server.get('/findpw',function(request,response){
     response.redirect('/findpw.html');
 });
