@@ -4,12 +4,14 @@ const querystring=require("querystring");
 const crypto = require('crypto');
 
 var mysql=require("mysql");
+const { response } = require('express');
 
 var Li;
 var css;
 var register;
 var findid;
 var findpw;
+var result_id;
 fs.readFile('Li.html','utf8',function(err,data){
     if(err){
         return console.error(err);
@@ -39,6 +41,12 @@ fs.readFile('findpw.html','utf8',function(err,data){
         return console.error(err);
     }
     findpw=data;
+});
+fs.readFile('resultid.html','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    result_id=data;
 });
 var db_info = {
     host: 'localhost',
@@ -104,21 +112,44 @@ server.post('/findid',function(request,response){
         var data=querystring.parse(oreder.toString());
         user.query("select name from user where name=? and jockey=?",[data.name,data.jockey],function(err,result){
             if(err){
-                response.writeHead(200,{"Content-Type":"text/html"});
-                response.write(login);
-                response.end("<script>alert('등록된 유저가 아닙니다 회원가입을 시도해 보세요');</script>");
+                response.send("<script>alert('등록된 유저가 아닙니다 회원가입을 시도해 보세요');document.location.href='/';</script>");
             }
-            else{
+            else if (result.length > 0) {
                 user.query("select pw from user where name=? and jockey=?",[data.name,data.jockey],function(err,result){
-                    var pw=JSON.stringify(result);
-                    console.log(pw);
+                    if(err){
+                        response.send('<script type="text/javascript">alert("pw가 올바르지 않습니다");document.location.href="/findid";</script>');
+                    }
+                    else {
+                        user.query("select salt from user where name=? and jockey=?",[data.name,data.jockey],function(err,res){
+                            if(!err){
+                                var salt_temp=JSON.stringify(res);
+                                var salt=salt_temp.split(',');
+                                salt[0]=salt[0].substring(10,salt[0].length-2);
+                                for(var i=1;i<salt.length-2;i++){
+                                    salt[i]=salt[i].substring(9,salt[i].length-2);
+                                }
+                                salt[salt.length-1]=salt[salt.length-1].substring(9,salt[i].length-3);
+                                for(var i=0;i<salt.length;i++){
+                                    console.log(salt[i]);
+                                }
+                            }
+                        });
+                        //var checkpw=crypto.pbkdf2(data.password, salt, 100000, 64, 'sha512');
+                    }
                 });
-            }
-        })
+            } else {              
+                response.send('<script type="text/javascript">alert("로그인 정보가 일치하지 않습니다."); document.location.href="/findid";</script>');
+            } 
+        });
         console.log("name=",data.name);
         console.log("pw=",data.password);
     });
 });
+/*server.get('/result_id',function(){
+    response.writeHead(200,{"Content-Type":"text/html"});
+    response.write(result_id);
+    response.end();
+});*/
 server.get('/findpw',function(request,response){
     response.redirect('/findpw.html');
 });
