@@ -73,21 +73,60 @@ var server=express();
 server.listen(8080,function(){
     console.log("서버실행");
 });
+//server.use(cookieParse());
 server.get('/',function(request,response){
     response.writeHead(200, {"Content-Type": "text/html"});
     response.write(Li);
     response.end();
-});
+});//complete
+server.post('/',function(request,response){
+    request.on('data',function(oreder){
+        var data=querystring.parse(oreder.toString());
+        console.log(data.id);
+        user.query("select pw,salt from user where id=?",[data.id],function(err,res){
+            if(err){response.send("<script type='text/javascript'>alert('입력하신 id가 존재하지 않습니다 다시입력해주세요');document.location.href='/';</script>");}
+            else if(res.length>0){
+                console.log("아이디 정확");
+                var temp=JSON.stringify(res);
+                var infor=temp.split(',');
+                //console.log(infor[0]);
+                //console.log(infor[1]);
+                var pw=infor[0].substring(8,infor[0].length-1);
+                var salt=infor[1].substring(8,infor[1].length-3);
+                console.log(pw);
+                console.log(salt);
+                crypto.pbkdf2(data.password, salt, 100000, 64, 'sha512',function(err, key){
+                    var hashed = key.toString('base64');
+                    console.log(hashed);
+                    if(hashed==pw){
+                        console.log("로그인 성공~!");
+                        response.cookie('auth',true);
+                        response.cookie('id',data.id);
+                        response.send("<script>alert('로그인 되셨습니다');document.location.href='/';</script>");
+                    }
+                    else{
+                        console.log("로그인 실패");
+                        response.send("<script type='text/javascript'>alert('패스워드를 잘못 입력하셨습니다 다시입력해주세요');document.location.href='/';</script>");
+                    }
+                });
+                //console.log(id);
+            }
+            else{
+                response.send("<script type='text/javascript'>alert('입력하신 id가 존재하지 않습니다 다시입력해주세요');document.location.href='/';</script>");
+            }
+        });
+    });
+});//complete
 server.get('/register',function(request,response){
     response.writeHead(200,{"Content-Type":"text/html"});
     response.write(register);
     response.end();
-});
+});//complete
 server.get('/Li.css',function(request,response){
     response.writeHead(200, {"Content-Type": "text/css"});
     response.write(css);
     response.end();
-});
+});//complete
 server.post('/register',function(request,response){
     request.on('data',function(oreder){
             var data=querystring.parse(oreder.toString());
@@ -109,12 +148,12 @@ server.post('/register',function(request,response){
                 });
             });
     });
-});
+});//complete
 server.get('/findid',function(request,response){
     response.writeHead(200,{"Content-Type":"text/html"});
     response.write(findid);
     response.end();
-});
+});//complete
 server.post('/findid',function(request,response){
     request.on('data',function(oreder){
         var data=querystring.parse(oreder.toString());
@@ -174,7 +213,7 @@ server.post('/findid',function(request,response){
             } 
         });
     });
-});
+});//complete
 server.get('/findpw',function(request,response){
     response.writeHead(200,{"Content-Type":"text/html"});
     response.write(findpw);
@@ -192,7 +231,7 @@ server.post('/findpw',function(request,response){
                 response.redirect('/findpw1');
             }
             else{
-                response.send("<script type='text/javascript'>alert('ㅅㅂ 프로젝트하기 ㅈ같다');document.location.href='/findpw';</script>");
+                response.send("<script type='text/javascript'>alert('입력하신 아이디가 존재하지않습니다');document.location.href='/findpw';</script>");
             }
         });
     });
@@ -206,24 +245,16 @@ server.post('/findpw1',function(request,response){
     request.on('data',function(oreder){
         var data=querystring.parse(oreder.toString());
         console.log(data.id);
-        user.query("select id from user where id=?",[data.id],function(err,result){
-            if(err){
-                response.send("<script type='text/javascript'>alert('ㅅㅂ 프로젝트하기 ㅈ같다');document.location.href='/findpw';</script>");
-            }
-            else if(result.length>0){
-                response.redirect('/findpw1');
-            }
-        });
     });
 });
 server.post('/sendemail',async function(request,response){
     request.on('data',function(oreder){
-        var data=querystring.parse(oreder.toString())
-        console.log(data.email);
+        var data=querystring.parse(oreder.toString());
+        console.log(data.email1);
         var mailOption = { // 메일 옵션  설정
             from: 'k01066624566@gmail.com',  // 보내는사람
             to: data.emial,
-            subject: '[Connector 이메일 인증]',
+            subject: '[Connector] 이메일 인증',
             html: '<p>아래의 링크를 클릭해서 인증해주센!</p>' // html 코드세팅
         }
         transporter.sendMail(mailOption, function(err, res){ // 메일 발송
@@ -234,6 +265,6 @@ server.post('/sendemail',async function(request,response){
                 response.send("<script type='text/javascript'>alert('인증번호가 보내졌습니다');document.location.href='/findpw1';</script>");
             }
             transporter.close();
-        })
+        });
     });
 });

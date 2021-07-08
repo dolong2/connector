@@ -10,15 +10,15 @@
 </head>
 <body>
     <div class="login-form">
-    <form action="./findpw1" method="POST">
             <a href="/" style="text-decoration:none"><h2>비밀번호 찾기</h2></a>
             <form action="./sendemail" method="POST">
-                <input type="text" name="email" required placeholder="이메일 입력"class="text-field">
+                <input type="text" name="email1" required placeholder="이메일 입력"class="text-email-field">
                 <input type="submit" id="submit" value="요청" class="btn"><br>     
             </form>
-            <input type="text" name="email" required placeholder="인증번호 입력"class="text-field">
+        <form action="./findpw1" method="POST">
+            <input type="text" name="num" required placeholder="인증번호 입력"class="text-field">
             <input type="submit" id="submit" value="다음" class="submit-btn">
-    </form>
+        </form>
     </div>
 </body>
 </html>
