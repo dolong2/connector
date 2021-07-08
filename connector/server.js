@@ -157,7 +157,7 @@ server.post('/findid',function(request,response){
     request.on('data',function(oreder){
         var data=querystring.parse(oreder.toString());
         user.query("select name from");
-        /*user.query("select name from user where name=? and jockey=?",[data.name,data.jockey],function(err,result){
+        user.query("select name from user where name=? and jockey=?",[data.name,data.jockey],function(err,result){
             if(err){
                 response.send("<script>alert('등록된 유저가 아닙니다 회원가입을 시도해 보세요');document.location.href='/';</script>");
             }
@@ -211,7 +211,7 @@ server.post('/findid',function(request,response){
                 
                 response.send('<script type="text/javascript">alert("입력한 정보가 일치하지 않습니다."); document.location.href="/findid";</script>');
             } 
-        });*/
+        });
     });
 });//complete
 server.get('/findpw',function(request,response){
