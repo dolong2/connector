@@ -4,6 +4,7 @@ const querystring=require("querystring");
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
+var db_set=require('./db_infor.json');
 var mysql=require("mysql");
 //const { response } = require('express');
 
@@ -54,24 +55,22 @@ fs.readFile('findpw2.html','utf8',function(err,data){
     }
     findpw2=data;
 });
-var db_info = {
-    host: 'localhost',
-    port: '3306',
-    user: 'root',
-    password: 'qazwsxedc9070@',
-    database: 'users'
-}
-var user=mysql.createConnection(db_info);
-var transporter = nodemailer.createTransport({  // transporter 에서 보낼 메일아이디와 비번 설정
-    service: 'gmail', // 이메일 보내는 서비스 주소
-    auth: {
-        user:'bodercoding@gmail.com',
-        pass:'wety4566@'
-    }
-})
+var user=mysql.createConnection({
+    host : db_set.host,
+    user : db_set.user,
+    password : db_set.password,
+    database : db_set.database
+});
 var server=express();
 server.listen(8080,function(){
     console.log("서버실행");
+    var db_info = {
+        host: db_set[0],
+        port: db_set[1],
+        user: db_set[2],
+        password: db_set[3],
+        database: db_set[4]
+    }
 });
 //server.use(cookieParse());
 server.get('/',function(request,response){
@@ -157,7 +156,8 @@ server.get('/findid',function(request,response){
 server.post('/findid',function(request,response){
     request.on('data',function(oreder){
         var data=querystring.parse(oreder.toString());
-        user.query("select name from user where name=? and jockey=?",[data.name,data.jockey],function(err,result){
+        user.query("select name from");
+        /*user.query("select name from user where name=? and jockey=?",[data.name,data.jockey],function(err,result){
             if(err){
                 response.send("<script>alert('등록된 유저가 아닙니다 회원가입을 시도해 보세요');document.location.href='/';</script>");
             }
@@ -211,7 +211,7 @@ server.post('/findid',function(request,response){
                 
                 response.send('<script type="text/javascript">alert("입력한 정보가 일치하지 않습니다."); document.location.href="/findid";</script>');
             } 
-        });
+        });*/
     });
 });//complete
 server.get('/findpw',function(request,response){
@@ -236,18 +236,18 @@ server.post('/findpw',function(request,response){
         });
     });
 });
-server.get('/findpw1',function(request,response){
+server.get('/findpw|',function(request,response){
     response.writeHead(200,{"Content-Type":"text/html"});
     response.write(findpw1);
     response.end();
 });
-server.post('/findpw1',function(request,response){
+server.post('/findpw|',function(request,response){
     request.on('data',function(oreder){
         var data=querystring.parse(oreder.toString());
         console.log(data.id);
     });
 });
-server.post('/sendemail',async function(request,response){
+/*server.post('/sendemai',async function(request,response){
     request.on('data',function(oreder){
         var data=querystring.parse(oreder.toString());
         console.log(data.email1);
@@ -267,4 +267,4 @@ server.post('/sendemail',async function(request,response){
             transporter.close();
         });
     });
-});
+});*/
