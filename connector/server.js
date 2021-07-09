@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
 var db_set=require('./db_infor.json');
+var ejs=require('ejs');
 var mysql=require("mysql");
 //const { response } = require('express');
 
@@ -13,6 +14,13 @@ var css;
 var register;
 var findid;
 var findpw,findpw1,findpw2;
+var main;
+fs.readFile('temp_main.html','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    main=data;
+});
 fs.readFile('Li.html','utf8',function(err,data){
     if(err){
         return console.error(err);
@@ -73,6 +81,14 @@ server.listen(8080,function(){
     }
 });
 //server.use(cookieParse());
+server.get('/main',function(request,response){
+    console.log(request.cookies);
+    user.query("select * from poster",function(err,result){
+        response.send(ejs.render(main,{
+            main:result
+        }));
+    });
+});
 server.get('/',function(request,response){
     response.writeHead(200, {"Content-Type": "text/html"});
     response.write(Li);
@@ -100,8 +116,8 @@ server.post('/',function(request,response){
                     if(hashed==pw){
                         console.log("로그인 성공~!");
                         response.cookie('auth',true);
-                        response.cookie('id',data.id);
-                        response.send("<script>alert('로그인 되셨습니다');document.location.href='/';</script>");
+                        
+                        response.send("<script>alert('로그인 되셨습니다');document.location.href='/main';</script>");
                     }
                     else{
                         console.log("로그인 실패");
