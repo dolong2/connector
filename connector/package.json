@@ -21,23 +21,7 @@
       "resolved": "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.0.0.tgz",
       "version": "9.0.0"
     },
-    "body-parser": {
-      "integrity": "sha512-dhEPs72UPbDnAQJ9ZKMNTP6ptJaionhP5cBb541nXPlW60Jepo9RV/a4fX4XWW9CuFNK22krhrj1+rgzifNCsw==",
-      "requires": {
-        "bytes": "3.1.0",
-        "content-type": "~1.0.4",
-        "debug": "2.6.9",
-        "depd": "~1.1.2",
-        "http-errors": "1.7.2",
-        "iconv-lite": "0.4.24",
-        "on-finished": "~2.3.0",
-        "qs": "6.7.0",
-        "raw-body": "2.4.0",
-        "type-is": "~1.6.17"
-      },
-      "resolved": "https://registry.npmjs.org/body-parser/-/body-parser-1.19.0.tgz",
-      "version": "1.19.0"
-    },
+    "body-parser": "^1.19.0",
     "bytes": {
       "integrity": "sha512-zauLjrfCG+xvoyaqLoV8bLVXXNGC4JqlxFCutSDWA6fJrTo2ZuvLYTqZ7aHBLZSMOopbzwv8f+wZcVzfVTI2Dg==",
       "resolved": "https://registry.npmjs.org/bytes/-/bytes-3.1.0.tgz",
@@ -66,6 +50,7 @@
       "resolved": "https://registry.npmjs.org/cookie-parse/-/cookie-parse-0.4.0.tgz",
       "version": "0.4.0"
     },
+    "cookie-parser": "^1.4.5",
     "cookie-signature": {
       "integrity": "sha1-4wOogrNCzD7oylE6eZmXNNqzriw=",
       "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz",

@@ -7,6 +7,7 @@ const nodemailer = require('nodemailer');
 var db_set=require('./db_infor.json');
 var ejs=require('ejs');
 var mysql=require("mysql");
+var cookieParser = require('cookie-parser')
 //const { response } = require('express');
 
 var Li;
@@ -70,29 +71,29 @@ var user=mysql.createConnection({
     database : db_set.database
 });
 var server=express();
+server.use(cookieParser());
 server.listen(8080,function(){
     console.log("서버실행");
-    var db_info = {
-        host: db_set[0],
-        port: db_set[1],
-        user: db_set[2],
-        password: db_set[3],
-        database: db_set[4]
+});
+server.get('/main',function(request,response){
+    console.log(request.cookies.auth);
+    if(request.cookies.auth){
+        user.query("select * from poster",function(err,result){
+            response.send(ejs.render(main,{
+                main:result
+            }));
+        });
     }
 });
-//server.use(cookieParse());
-server.get('/main',function(request,response){
-    console.log(request.cookies);
-    user.query("select * from poster",function(err,result){
-        response.send(ejs.render(main,{
-            main:result
-        }));
-    });
-});
 server.get('/',function(request,response){
-    response.writeHead(200, {"Content-Type": "text/html"});
-    response.write(Li);
-    response.end();
+    if(request.cookies.auth){
+        response.redirect('/main')
+    }
+    else{
+        response.writeHead(200, {"Content-Type": "text/html"});
+        response.write(Li);
+        response.end();
+    }
 });//complete
 server.post('/',function(request,response){
     request.on('data',function(oreder){
@@ -104,8 +105,6 @@ server.post('/',function(request,response){
                 console.log("아이디 정확");
                 var temp=JSON.stringify(res);
                 var infor=temp.split(',');
-                //console.log(infor[0]);
-                //console.log(infor[1]);
                 var pw=infor[0].substring(8,infor[0].length-1);
                 var salt=infor[1].substring(8,infor[1].length-3);
                 console.log(pw);
@@ -116,7 +115,7 @@ server.post('/',function(request,response){
                     if(hashed==pw){
                         console.log("로그인 성공~!");
                         response.cookie('auth',true);
-                        
+                        response.cookie('id',user.id);
                         response.send("<script>alert('로그인 되셨습니다');document.location.href='/main';</script>");
                     }
                     else{

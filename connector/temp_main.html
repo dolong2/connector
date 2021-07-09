@@ -18,7 +18,7 @@
         <% main.forEach(function(item,index){ %>
         <tr>
             <td><%= item.id%></td>
-            <td><%= item.name%></td>
+            <td><a href="/edit/<%= item.id %>"><%= item.name%></a></td>
             <td><%= item.content%></td>
             <td><%= item.language%></td>
             <td><%= item.class%></td>
