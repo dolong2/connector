@@ -18,8 +18,8 @@
         <% main.forEach(function(item,index){ %>
         <tr>
             <td><%= item.id%></td>
-            <td><a href="/viewallcontents/<%= item.id %>"><%= item.name%></a></td>
-            <td><%= item.content%></td>
+            <td><a href="/viewallcontents/<%= item.id %>"style="text-decoration:none"><%= item.name%></a></td>
+            <td><%= item.content.substring(0,25)%></td>
             <td><%= item.language%></td>
             <td><%= item.class%></td>
         </tr>
