@@ -7,7 +7,8 @@ const nodemailer = require('nodemailer');
 var db_set=require('./db_infor.json');
 var ejs=require('ejs');
 var mysql=require("mysql");
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
+const { response } = require('express');
 //const { response } = require('express');
 
 var Li;
@@ -16,6 +17,7 @@ var register;
 var findid;
 var findpw,findpw1,findpw2;
 var main;
+var view_all_contents;
 fs.readFile('temp_main.html','utf8',function(err,data){
     if(err){
         return console.error(err);
@@ -64,6 +66,12 @@ fs.readFile('findpw2.html','utf8',function(err,data){
     }
     findpw2=data;
 });
+fs.readFile('view_all_contents.html','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    view_all_contents=data;
+});
 var user=mysql.createConnection({
     host : db_set.host,
     user : db_set.user,
@@ -81,6 +89,16 @@ server.get('/main',function(request,response){
         user.query("select * from poster",function(err,result){
             response.send(ejs.render(main,{
                 main:result
+            }));
+        });
+    }
+});
+server.get('/viewallcontents/:id',function(request,response){
+    console.log(request.params.id);
+    if(request.cookies.auth){
+        user.query("select *from poster where id=?",[request.params.id],function(err,result){
+            response.send(ejs.render(view_all_contents,{
+                data:result[0]
             }));
         });
     }
@@ -115,7 +133,7 @@ server.post('/',function(request,response){
                     if(hashed==pw){
                         console.log("로그인 성공~!");
                         response.cookie('auth',true);
-                        response.cookie('id',user.id);
+                        response.cookie('id',data.id);
                         response.send("<script>alert('로그인 되셨습니다');document.location.href='/main';</script>");
                     }
                     else{
