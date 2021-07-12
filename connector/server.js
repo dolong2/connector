@@ -3,13 +3,14 @@ const fs=require('fs');
 const querystring=require("querystring");
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const bodyParser=require('body-parser');
 
 var db_set=require('./db_infor.json');
+var mail_set=require('./mail_infor.json');
 var ejs=require('ejs');
 var mysql=require("mysql");
 var cookieParser = require('cookie-parser');
 const { response } = require('express');
+var auth_num;
 //const { response } = require('express');
 
 var Li;
@@ -79,6 +80,17 @@ var user=mysql.createConnection({
     password : db_set.password,
     database : db_set.database
 });
+let transporter=nodemailer.createTransport({
+    service: 'gmail',
+    // host를 gmail로 설정
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth:{
+        user: mail_set.user,
+        pass: mail_set.pass,
+    },
+});
 var server=express();
 server.use(cookieParser());
 server.use(express.urlencoded({extended: true}));
@@ -94,6 +106,10 @@ server.get('/main',function(request,response){
                 main:result
             }));
         });
+    }
+    else{
+        response.writeHead(200,{"Content-Type":"text/html"});
+        response.end('<script>alert("로그인 먼저 해주세요");document.location.href="/";</script>');
     }
 });
 server.get('/viewallcontents/:id',function(request,response){
@@ -268,10 +284,25 @@ server.get('/findpw|',function(request,response){
     response.write(findpw1);
     response.end();
 });//complete
-server.post('/findpw|',function(request,response){
+/*server.post('/findpw|',function(request,response){
     console.log("/findpw| 실행됨");
-});
+});*/
 server.post('/send_email',function(request,response){
     console.log("실행됨");
     console.log(request.body.mail);
+    auth_num=Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
+    console.log(auth_num);
+    let info = transporter.sendMail({
+        // 보내는 곳의 이름과, 메일 주소를 입력
+        from: `"Connector Team" <${mail_set.user}>`,
+        // 받는 곳의 메일 주소를 입력
+        to: request.body.mail,
+        // 보내는 메일의 제목을 입력
+        subject: '인증',
+        // 보내는 메일의 내용을 입력
+        // text: 일반 text로 작성된 내용
+        // html: html로 작성된 내용
+        text: '대충 인증번호',
+        html: `<b>${auth_num}</b>`,
+    });
 });
