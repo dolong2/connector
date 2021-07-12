@@ -15,6 +15,7 @@ var auth_num;
 
 var Li;
 var css;
+var css2;
 var register;
 var findid;
 var findpw,findpw1,findpw2;
@@ -73,6 +74,12 @@ fs.readFile('view_all_contents.html','utf8',function(err,data){
         return console.error(err);
     }
     view_all_contents=data;
+});
+fs.readFile('main_1.css','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    css2=data;
 });
 var user=mysql.createConnection({
     host : db_set.host,
@@ -175,6 +182,11 @@ server.get('/Li.css',function(request,response){
     response.write(css);
     response.end();
 });//complete
+server.get('/main_1.css',function(request,response){
+    response.writeHead(200, {"Content-Type": "text/css"});
+    response.write(css2);
+    response.end();
+});
 server.post('/register',function(request,response){
     console.log(request.body.password);
     var pw,salt;
@@ -284,25 +296,26 @@ server.get('/findpw|',function(request,response){
     response.write(findpw1);
     response.end();
 });//complete
-/*server.post('/findpw|',function(request,response){
-    console.log("/findpw| 실행됨");
-});*/
 server.post('/send_email',function(request,response){
     console.log("실행됨");
     console.log(request.body.mail);
     auth_num=Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
     console.log(auth_num);
     let info = transporter.sendMail({
-        // 보내는 곳의 이름과, 메일 주소를 입력
         from: `"Connector Team" <${mail_set.user}>`,
-        // 받는 곳의 메일 주소를 입력
         to: request.body.mail,
-        // 보내는 메일의 제목을 입력
         subject: '인증',
-        // 보내는 메일의 내용을 입력
-        // text: 일반 text로 작성된 내용
-        // html: html로 작성된 내용
         text: '대충 인증번호',
-        html: `<b>${auth_num}</b>`,
+        html: `<b>인증번호:${auth_num}</b>`,
     });
+});
+server.post('/findpw|',function(request,response){
+    console.log("/findpw| 실행됨");
+    console.log(request.body.num);
+    if(request.body.num==auth_num){
+        response.send('<script type="text/javascript">alert("인증번호가 확인되셨습니다");document.location.href="/";</script>');
+    }
+    else{
+        response.send('<script type="text/javascript">alert("인증번호가 올바르지않습니다");document.location.href="/findpw1";</script>');
+    }
 });
