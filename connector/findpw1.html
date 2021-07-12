@@ -11,14 +11,14 @@
 <body>
     <div class="login-form">
             <a href="/" style="text-decoration:none"><h2>비밀번호 찾기</h2></a>
-            <form action="./sendemail" method="POST">
-                <input type="text" name="email1" required placeholder="이메일 입력"class="text-email-field">
-                <input type="submit" id="submit" value="요청" class="btn"><br>     
+            <form action="./send_email" method="POST">
+                <input type="text" name="mail" required placeholder="이메일 입력"class="text-field">
+                <input type="submit" id="submit" value="요청" class="btn"><br>
             </form>
-        <form action="./findpw|" method="POST">
+        <!--<form action="./findpw|" method="POST">
             <input type="text" name="num" required placeholder="인증번호 입력"class="text-field">
             <input type="submit" id="submit" value="다음" class="submit-btn">
-        </form>
+        </form>-->
     </div>
 </body>
 </html>
