@@ -10,7 +10,6 @@ var ejs=require('ejs');
 var mysql=require("mysql");
 var cookieParser = require('cookie-parser');
 const { response } = require('express');
-var auth_num;
 //const { response } = require('express');
 
 var Li;
@@ -115,8 +114,7 @@ server.get('/main',function(request,response){
         });
     }
     else{
-        response.writeHead(200,{"Content-Type":"text/html"});
-        response.end('<script>alert("로그인 먼저 해주세요");document.location.href="/";</script>');
+        response.send("<script type='text/javascript'>alert('로그인 먼저 해주세요');document.location.href='/';</script>");
     }
 });
 server.get('/viewallcontents/:id',function(request,response){
@@ -127,6 +125,9 @@ server.get('/viewallcontents/:id',function(request,response){
                 data:result[0]
             }));
         });
+    }
+    else{
+        response.send('<script type="text/javascript"charset="utf-8">alert("로그인 먼저 해주세요");document.location.href="/";</script>');
     }
 });
 server.get('/',function(request,response){
@@ -186,7 +187,7 @@ server.get('/main_1.css',function(request,response){
     response.writeHead(200, {"Content-Type": "text/css"});
     response.write(css2);
     response.end();
-});
+});//complete
 server.post('/register',function(request,response){
     console.log(request.body.password);
     var pw,salt;
@@ -299,7 +300,7 @@ server.get('/findpw|',function(request,response){
 server.post('/send_email',function(request,response){
     console.log("실행됨");
     console.log(request.body.mail);
-    auth_num=Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
+    var auth_num=Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
     console.log(auth_num);
     let info = transporter.sendMail({
         from: `"Connector Team" <${mail_set.user}>`,
@@ -308,14 +309,18 @@ server.post('/send_email',function(request,response){
         text: '대충 인증번호',
         html: `<b>인증번호:${auth_num}</b>`,
     });
+    response.cookie('auth_num',auth_num);
+    response.send('<script type="text/javascript">alert("인증번호를 전송했습니다");document.location.href="/findpw|";</script>');
 });
 server.post('/findpw|',function(request,response){
     console.log("/findpw| 실행됨");
     console.log(request.body.num);
-    if(request.body.num==auth_num){
+    if(request.body.num==request.cookies.auth_num){
+        response.clearCookie('auth_num');
         response.send('<script type="text/javascript">alert("인증번호가 확인되셨습니다");document.location.href="/";</script>');
     }
     else{
-        response.send('<script type="text/javascript">alert("인증번호가 올바르지않습니다");document.location.href="/findpw1";</script>');
+        response.clearCookie('auth_num');
+        response.send('<script type="text/javascript">alert("인증번호가 올바르지않습니다");document.location.href="/findpw|";</script>');
     }
 });
