@@ -17,7 +17,7 @@ var css;
 var css2;
 var register;
 var findid;
-var findpw,findpw1,findpw2;
+var findpw,findpw1,mail_auth;
 var main;
 var view_all_contents;
 fs.readFile('temp_main.html','utf8',function(err,data){
@@ -62,11 +62,11 @@ fs.readFile('findpw1.html','utf8',function(err,data){
     }
     findpw1=data;
 });
-fs.readFile('findpw2.html','utf8',function(err,data){
+fs.readFile('mail_auth.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
-    findpw2=data;
+    mail_auth=data;
 });
 fs.readFile('view_all_contents.html','utf8',function(err,data){
     if(err){
@@ -135,6 +135,8 @@ server.get('/',function(request,response){
         response.redirect('/main')
     }
     else{
+        response.clearCookie('auth_num');
+        response.clearCookie('id_findpw');
         response.writeHead(200, {"Content-Type": "text/html"});
         response.write(Li);
         response.end();
@@ -211,68 +213,28 @@ server.get('/findid',function(request,response){
     response.writeHead(200,{"Content-Type":"text/html"});
     response.write(findid);
     response.end();
-});//need fix
+});//complete
 server.post('/findid',function(request,response){
-    request.on('data',function(oreder){
-        var data=querystring.parse(oreder.toString());
-        user.query("select name from");
-        user.query("select name from user where name=? and jockey=?",[data.name,data.jockey],function(err,result){
+        user.query("select id,pw,salt from user where name=? and jockey=?",[request.body.name,request.body.jockey],function(err,result){
             if(err){
                 response.send("<script>alert('등록된 유저가 아닙니다 회원가입을 시도해 보세요');document.location.href='/';</script>");
             }
             else if (result.length > 0) {
-                user.query("select pw from user where name=? and jockey=?",[data.name,data.jockey],function(err,result){
-                    if(err){
-                        response.send('<script type="text/javascript">alert("입력한 정보가 올바르지 않습니다");document.location.href="/findid";</script>');
+                console.log(result[0].id);
+                crypto.pbkdf2(request.body.password,result[0].salt,100000, 64, 'sha512',(err,key)=>{
+                    var pw = key.toString('base64');
+                    if(pw==result[0].pw){
+                        response.send("<script>alert('당신의 아이디는"+result[0].id+"입니다');document.location.href='/';</script>");
                     }
-                    else {
-                        user.query("select salt from user where name=? and jockey=?",[data.name,data.jockey],function(err,res){
-                            if(err){
-                            }
-                            else if(result.length>0){
-                                var salt_temp=JSON.stringify(res);
-                                var salt=salt_temp.split(',');
-                                if(salt.length==1){
-                                    salt[0]=salt[0].substring(10,salt[0].length-3);    
-                                }
-                                else{
-                                    salt[0]=salt[0].substring(10,salt[0].length-2);
-                                    console.log(salt.length);
-                                    for(var i=1;i<salt.length-2;i++){
-                                        salt[i]=salt[i].substring(9,salt[i].length-2);
-                                    }
-                                    salt[salt.length-1]=salt[salt.length-1].substring(9,salt[i].length-3);
-                                }
-                                crypto.pbkdf2(data.password, salt[0], 100000, 64, 'sha512',function(err, key){
-                                    var hashed = key.toString('base64');
-                                    console.log("hashed_pw:",hashed);
-                                    user.query("select id from user where pw=?",[hashed],function(err,results){
-                                        if(err)response.send('<script type="text/javascript">alert("입력한 패스워드가 일치하지 않습니다");document.location.href="/findid";</script>');
-                                        else if(result.length>0){
-                                            var id_temp=JSON.stringify(results);
-                                            var id=id_temp.split(',');
-                                            id[0]=id[0].substring(8,id[0].length-3);
-                                            console.log(id[0]);
-                                            if(id=='[]'){
-                                                response.send('<script type="text/javascript">alert("입력한 패스워드가 일치하지 않습니다");document.location.href="/findid";</script>');
-                                            }
-                                            else{
-                                                response.send('<script type="text/javascript">alert("아이디는'+id[0]+'입니다");document.location.href="/";</script>');
-                                            }
-                                        }
-                                    });
-                                });
-                            }
-                        });
+                    else{
+                        response.send("<script>alert('패스워드가 일치하지 않습니다');document.location.href='/findid';</script>");
                     }
-                });
-            } else {              
-                
+                 });
+            } else {
                 response.send('<script type="text/javascript">alert("입력한 정보가 일치하지 않습니다."); document.location.href="/findid";</script>');
             } 
         });
-    });
-});//need fix
+});//complete
 server.get('/findpw',function(request,response){
     response.writeHead(200,{"Content-Type":"text/html"});
     response.write(findpw);
@@ -285,19 +247,21 @@ server.post('/findpw',function(request,response){
             response.send("<script type='text/javascript'>alert('ㅅㅂ 프로젝트하기 ㅈ같다');document.location.href='/findpw';</script>");
         }
         else if(result.length>0){
-            response.redirect('/findpw|');
+            response.cookie('id_findpw',request.body.id);
+            response.send("<script type='text/javascript'>document.location.href='/mail_auth';</script>");
         }
         else{
             response.send("<script type='text/javascript'>alert('입력하신 아이디가 존재하지않습니다');document.location.href='/findpw';</script>");
         }
     });
 });//complete
-server.get('/findpw|',function(request,response){
+server.get('/mail_auth',function(request,response){
+    response.clearCookie('auth_num');
     response.writeHead(200,{"Content-Type":"text/html"});
-    response.write(findpw1);
+    response.write(mail_auth);
     response.end();
 });//complete
-server.post('/send_email',function(request,response){
+server.post('/mail_auth',function(request,response){
     console.log("실행됨");
     console.log(request.body.mail);
     var auth_num=Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
@@ -311,6 +275,16 @@ server.post('/send_email',function(request,response){
     });
     response.cookie('auth_num',auth_num);
     response.send('<script type="text/javascript">alert("인증번호를 전송했습니다");document.location.href="/findpw|";</script>');
+});//complete
+server.get('/logout',function(request,response){
+    response.clearCookie('auth');
+    response.clearCookie('id');
+    response.send('<script>alert("로그아웃 되셨습니다");document.location.href="/";</script>');
+});//complete
+server.get('/findpw|',function(request,response){
+    response.writeHead(200,{"Content-Type":"text/html"});
+    response.write(findpw1);
+    response.end();
 });
 server.post('/findpw|',function(request,response){
     console.log("/findpw| 실행됨");
