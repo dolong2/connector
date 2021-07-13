@@ -1,6 +1,5 @@
 const express=require('express');
 const fs=require('fs');
-const querystring=require("querystring");
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
@@ -10,7 +9,6 @@ var ejs=require('ejs');
 var mysql=require("mysql");
 var cookieParser = require('cookie-parser');
 const { response } = require('express');
-//const { response } = require('express');
 
 var Li;
 var css;
