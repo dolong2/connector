@@ -16,8 +16,7 @@ var css2;
 var register;
 var findid;
 var findpw,findpw1,mail_auth;
-var main;
-var view_all_contents;
+var main,view_all_contents;
 fs.readFile('temp_main.html','utf8',function(err,data){
     if(err){
         return console.error(err);
@@ -279,7 +278,7 @@ server.get('/logout',function(request,response){
     response.clearCookie('id');
     response.send('<script>alert("로그아웃 되셨습니다");document.location.href="/";</script>');
 });//complete
-server.get('/findpw|',function(request,response){
+/*server.get('/findpw|',function(request,response){
     response.writeHead(200,{"Content-Type":"text/html"});
     response.write(findpw1);
     response.end();
@@ -295,4 +294,4 @@ server.post('/findpw|',function(request,response){
         response.clearCookie('auth_num');
         response.send('<script type="text/javascript">alert("인증번호가 올바르지않습니다");document.location.href="/findpw|";</script>');
     }
-});
+});*/
