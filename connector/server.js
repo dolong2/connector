@@ -15,7 +15,7 @@ var css;
 var css2;
 var register;
 var findid;
-var findpw,findpw1,mail_auth;
+var findpw,findpw1,mail_auth,changepw;
 var main,view_all_contents;
 fs.readFile('temp_main.html','utf8',function(err,data){
     if(err){
@@ -77,11 +77,11 @@ fs.readFile('main_1.css','utf8',function(err,data){
     }
     css2=data;
 });
-fs.readFile('','utf8',function(err,data){
+fs.readFile('change_pw.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
-    css2=data;
+    changepw=data;
 });
 var user=mysql.createConnection({
     host : db_set.host,
@@ -140,6 +140,7 @@ server.get('/',function(request,response){
     else{
         response.clearCookie('auth_num');
         response.clearCookie('id_findpw');
+        response.clearCookie('changepw');
         response.writeHead(200, {"Content-Type": "text/html"});
         response.write(Li);
         response.end();
@@ -259,13 +260,17 @@ server.post('/findpw',function(request,response){
     });
 });//complete
 server.get('/mail_auth',function(request,response){
-    response.clearCookie('auth_num');
-    response.writeHead(200,{"Content-Type":"text/html"});
-    response.write(mail_auth);
-    response.end();
+    if(request.cookies.id_findpw){
+        response.clearCookie('auth_num');
+        response.writeHead(200,{"Content-Type":"text/html"});
+        response.write(mail_auth);
+        response.end();
+    }
+    else{
+        response.send('<script type="text/javascript">alert("접근권한이 없어요");document.location.href="/";</script>');
+    }
 });//complete
 server.post('/mail_auth',function(request,response){
-    console.log("실행됨");
     console.log(request.body.mail);
     var auth_num=Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
     console.log(auth_num);
@@ -284,20 +289,47 @@ server.get('/logout',function(request,response){
     response.clearCookie('id');
     response.send('<script>alert("로그아웃 되셨습니다");document.location.href="/";</script>');
 });//complete
-server.get('/findpw|',function(request,response){
-    response.writeHead(200,{"Content-Type":"text/html"});
-    response.write(findpw1);
-    response.end();
+server.get('/changepw',function(request,response){
+    if(request.cookies.changepw){
+        response.writeHead(200,{"Content-Type":"text/html"});
+        response.write(changepw);
+        response.end();
+    }
+    else{
+        response.send('<script type="text/javascript">alert("접근권한이 없어요");document.location.href="/";</script>');
+    }
+});//complete
+server.post('/changepw',function(request,response){
+    if(request.cookies.changepw){
+        user.query('select salt from user where id=?',[request.cookies.id_findpw],function(err,result){
+            crypto.pbkdf2(request.body.password, result[0].salt, 100000, 64, 'sha512', (err, key) => {
+                pw=key.toString('base64');
+                user.query('update user set pw=? where id=?',[pw,request.cookies.id_findpw]);
+            });
+        });
+        response.send('<script>alert("비밀번호가 성공적으로 변경되었습니다");document.location.href="/";</script>');
+    }
 });
+server.get('/findpw|',function(request,response){
+    if(request.cookies.id_findpw&&request.cookies.auth_num){
+        response.writeHead(200,{"Content-Type":"text/html"});
+        response.write(findpw1);
+        response.end();
+    }
+    else{
+        response.send('<script type="text/javascript">alert("접근권한이 없어요");document.location.href="/";</script>');
+    }
+});//compelete
 server.post('/findpw|',function(request,response){
     console.log("/findpw| 실행됨");
     console.log(request.body.num);
     if(request.body.num==request.cookies.auth_num){
         response.clearCookie('auth_num');
-        response.send('<script type="text/javascript">alert("인증번호가 확인되셨습니다");document.location.href="/";</script>');
+        response.cookie('changepw',true);
+        response.send('<script type="text/javascript">alert("인증번호가 확인되셨습니다");document.location.href="/changepw";</script>');
     }
     else{
         response.clearCookie('auth_num');
         response.send('<script type="text/javascript">alert("인증번호가 올바르지않습니다");document.location.href="/findpw|";</script>');
     }
-});
+});//complete

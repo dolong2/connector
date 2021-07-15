@@ -8,6 +8,7 @@ var io=require('socket.io')(server);
 var db_set=require('./db_infor.json');
 var mysql=require("mysql");
 
+let js;
 var roomname;
 var user=mysql.createConnection({
     host : db_set.host,
@@ -25,7 +26,6 @@ app.get("/:id", (req, res) => {
         res.end(data);
     });
     roomname=req.params.id;
-    console.log(req.params.id);
 });
 
 io.sockets.on("connection", (socket) => {

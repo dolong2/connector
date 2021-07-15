@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <link rel="icon" href="data:,">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="Li.css">
     <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
@@ -8,10 +9,10 @@
 </head>
 <body>
     <div class="login-form">
-        <a href="/" style="text-decoration:none"><h2>비밀번호 찾기</h2></a>
+        <a href="/" style="text-decoration:none"><h2>인증번호</h2></a>
         <div>
         <form action="./findpw|" method="POST">
-            <input type="text" name="num" required placeholder="인증번호 입력"class="text-field">
+            <input type="text" name="num" required placeholder="인증번호 입력"class="text-field"autocomplete="off">
             <input type="submit" id="submit" value="다음" class="submit-btn"><br>
         </form>
         <a href='/mail_auth'>메일이 안 오냐??</a>
