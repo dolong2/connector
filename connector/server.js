@@ -77,6 +77,12 @@ fs.readFile('main_1.css','utf8',function(err,data){
     }
     css2=data;
 });
+fs.readFile('','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    css2=data;
+});
 var user=mysql.createConnection({
     host : db_set.host,
     user : db_set.user,
