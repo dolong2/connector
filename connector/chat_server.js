@@ -25,17 +25,19 @@ app.get("/:id", (req, res) => {
         res.end(data);
     });
     roomname=req.params.id;
+    console.log(req.params.id);
 });
 
 io.sockets.on("connection", (socket) => {
     console.log('연결!');
     console.log(roomname);
+    socket.join(roomname);
     socket.on("message", data => {
         user.query("select name from user where id=?",[data.name],function(err,result){
             console.log(data.name);
             console.log(result[0].name);
             console.log(data.content);
-            io.sockets.emit("message", result[0].name,data.content);
+            io.to(roomname).emit("message", result[0].name,data.content);
         });
     });
 });
