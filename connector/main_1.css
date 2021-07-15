@@ -19,8 +19,9 @@ nav ul li {
 }
 
 #left_sidebar{
+    position:relative;
     width:15%;
-    height:600px;
+    height:650px;
     background-color:gray;
     float:left;
 }
@@ -84,7 +85,7 @@ nav ul li {
 
 #footer{
     width:100%;
-    height:100px;
+    height:50px;
     background-color:honeydew;
     clear:left;
 }
@@ -94,3 +95,31 @@ a:visited{
   a:link{
       color:black;
   }
+
+.line{
+    border: 0.1px solid black; width: 90%; height: 0px; margin:auto;
+}
+#right_sidebar{
+    position:relative;
+    width:15%;
+    height:650px;
+    background-color:gray;
+    float:left;
+}
+
+.personal_information{
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:90%;
+    height:relative;
+    border: 2px solid;
+    border-radius: 5px;
+    background-color:white;
+}
+
+.my_infromation{
+    font-size:x-large;
+}

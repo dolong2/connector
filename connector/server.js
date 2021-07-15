@@ -108,12 +108,16 @@ server.listen(8080,function(){
     console.log("서버실행");
 });
 server.get('/main',function(request,response){
+
     console.log(request.cookies.auth);
     if(request.cookies.auth){
-        user.query("select * from poster",function(err,result){
-            response.send(ejs.render(main,{
-                main:result
-            }));
+        user.query("select * from poster",function(err,results){
+            user.query("select *from user where id=?",[request.cookies.id],(err,result)=>{
+                response.send(ejs.render(main,{
+                    main:results,
+                    data:result[0]
+                }));
+            });
         });
     }
     else{

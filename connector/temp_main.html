@@ -15,9 +15,9 @@
                 </ul>
             </nav>
         </header>
-        <aside id="left_sidebar">
-            <div class="sidebar_1">
-                <div class="left_sidebar_form">
+        <aside id="right_sidebar">
+            <div class="personal_information">
+                <div class="left_sidebar">
                     <p><strong>언어</strong></p>
                     <form action="" method="GET">
                         <input type="submit" id="button_l1" value="C">
@@ -66,30 +66,23 @@
             </div>
         </section>
         <aside id = "right_sidebar">
-            <div class="sidebar_2">
-                <div class="left_sidebar_form">
-                    <p><strong>언어</strong></p>
-                    <form action="" method="GET">
-                        <input type="submit" id="button_l1" value="C">
-                        <input type="submit" id="button_l2" value="C+">
-                        <input type="submit" id="button_l3" value="C#">
-                        <input type="submit" id="button_l4" value="Python">
-                        <input type="submit" id="button_l5" value="Java">
-                        <input type="submit" id="button_l6" value="JavaScript">
-                        <input type="submit" id="button_l7" value="Node.js">
-                        <input type="submit" id="button_l8" value="Kotlin">
-                        <input type="submit" id="button_l9" value="Swift">
-                </form>
-                    <p><strong>분야</strong></p>
-                    <form action="" method="GET">
-                        <input type="submit" id="button_f1" value="Front_end">
-                        <input type="submit" id="button_f2" value="Back_end">
-                        <input type="submit" id="button_f3" value="Android">
-                        <input type="submit" id="button_f4" value="iOS">
-                        <input type="submit" id="button_f5" value="A.I">
-                        <input type="submit" id="button_f6" value="Game">
-                    </form>
-                    <a href='/logout'style="text-decoration:none">로그아웃</a>
+            <div class="personal_information">
+
+                <div>
+                    <p class="my_infromation"><strong>내 정보</strong></p>
+                    <div class="line"></div> 
+                        <h4>아이디:<%= data.id %></h4>
+                        <br>
+                        <h4>이름:<%= data.name %></h4>
+                        <br>
+                        <h4>기수:<%= data.jockey %></h4>
+                        <br>
+                        <h4>자주쓰는 언어:<%= data.tag==''? data.tag:'아직 선택X' %></h4>
+                        <br>
+                        <h4>전공:<%= data.tag==''? data.tag:'아직 선택X' %></h4>
+                        <br>
+                        <a href="">정보수정</a>
+                        <a href="/logout">로그아웃</a>
                 </div>
         </aside>
         <footer id = "footer">
