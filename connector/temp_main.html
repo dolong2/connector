@@ -54,7 +54,7 @@
                     </tr>
                     <% main.forEach(function(item,index){ %>
                     <tr>
-                        <td><a href='http://10.120.74.53:8085/<%= item.id%>'><%= item.id%></a></td>
+                        <td><a href='http://10.120.74.53:8085/<%= item.id%>'style="text-decoration:none"><%= item.id%></a></td>
                         <td><a href="/viewallcontents/<%= item.id %>"style="text-decoration:none"><%= item.name%></a></td>
                         <td><%= item.content.substring(0,25)%></td>
                         <td><%= item.language%></td>
@@ -89,7 +89,7 @@
                         <input type="submit" id="button_f5" value="A.I">
                         <input type="submit" id="button_f6" value="Game">
                     </form>
-                    <a href='/logout'>로그아웃</a>
+                    <a href='/logout'style="text-decoration:none">로그아웃</a>
                 </div>
         </aside>
         <footer id = "footer">

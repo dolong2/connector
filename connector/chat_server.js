@@ -8,7 +8,6 @@ var io=require('socket.io')(server);
 var db_set=require('./db_infor.json');
 var mysql=require("mysql");
 
-let js;
 var roomname;
 var user=mysql.createConnection({
     host : db_set.host,
@@ -41,11 +40,6 @@ io.sockets.on("connection", (socket) => {
         });
     });
 });
-var namespace = io.of('/balmostory');
-namespace.on('connection',(Socket)=>{
-    console.log('success')
-    Socket.emit('message','hello')
-})
 
 server.listen(8085,function(){
     console.log("채팅 서버실행");

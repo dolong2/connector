@@ -88,3 +88,9 @@ nav ul li {
     background-color:honeydew;
     clear:left;
 }
+a:visited{
+    color: black;
+  }
+  a:link{
+      color:black;
+  }

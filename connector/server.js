@@ -309,7 +309,7 @@ server.post('/changepw',function(request,response){
         });
         response.send('<script>alert("비밀번호가 성공적으로 변경되었습니다");document.location.href="/";</script>');
     }
-});
+});//complete
 server.get('/findpw|',function(request,response){
     if(request.cookies.id_findpw&&request.cookies.auth_num){
         response.writeHead(200,{"Content-Type":"text/html"});
