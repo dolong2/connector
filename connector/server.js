@@ -113,6 +113,7 @@ server.get('/main',function(request,response){
     if(request.cookies.auth){
         user.query("select * from poster",function(err,results){
             user.query("select *from user where id=?",[request.cookies.id],(err,result)=>{
+                console.log(result[0].language);
                 response.send(ejs.render(main,{
                     main:results,
                     data:result[0]
@@ -205,8 +206,8 @@ server.post('/register',function(request,response){
         crypto.pbkdf2(request.body.password, buf.toString('base64'), 100000, 64, 'sha512', (err, key) => {
             salt=buf.toString('base64');
             pw=key.toString('base64');
-            console.log(request.body.email,pw,request.body.name,request.body.jockey,salt);
-            user.query('insert into user value(?,?,?,?,?,?)',[request.body.email,pw,request.body.name,request.body.jockey,salt,null],function(err,result){
+            console.log(request.body.email,pw,request.body.name,request.body.jockey,salt,request.body.language);
+            user.query('insert into user value(?,?,?,?,?,?)',[request.body.email,pw,request.body.name,request.body.jockey,salt,request.body.language],function(err,result){
                 if(err){
                     response.send("<script type='text/javascript'>alert('중복되는 아이디가 존재합니다.');document.location.href='/register'</script>");
                 }

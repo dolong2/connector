@@ -9,7 +9,7 @@
 <body>
     <div id="container">
         <header id="header">
-            <h1>CONNECTOR</h1>
+            <a href="/main" style="text-decoration:none"><h1>CONNECTOR</h1></a>
             <nav>
                 <ul>
                 </ul>
@@ -17,7 +17,7 @@
         </header>
         <aside id="right_sidebar">
             <div class="personal_information">
-                <div class="left_sidebar">
+                <div >
                     <p><strong>언어</strong></p>
                     <form action="" method="GET">
                         <input type="submit" id="button_l1" value="C">
@@ -70,19 +70,19 @@
 
                 <div>
                     <p class="my_infromation"><strong>내 정보</strong></p>
-                    <div class="line"></div> 
-                        <h4>아이디:<%= data.id %></h4>
+                    <div class="line"></div><br>
+                        <h4>아이디: <%= data.id %></h4>
                         <br>
-                        <h4>이름:<%= data.name %></h4>
+                        <h4>이름: <%= data.name %></h4>
                         <br>
-                        <h4>기수:<%= data.jockey %></h4>
+                        <h4>자주쓰는 언어: <%= data.language!=null? data.language:'아직 선택X' %></h4>
                         <br>
-                        <h4>자주쓰는 언어:<%= data.tag==''? data.tag:'아직 선택X' %></h4>
+                        <h4>전공: <%= data.language!=null? data.language:'아직 선택X' %></h4>
                         <br>
-                        <h4>전공:<%= data.tag==''? data.tag:'아직 선택X' %></h4>
+                        <h4>기수: <%= data.jockey %></h4>
                         <br>
-                        <a href="">정보수정</a>
-                        <a href="/logout">로그아웃</a>
+                        <a href=""style="text-decoration:none">정보수정</a>
+                        <a href="/logout"style="text-decoration:none">로그아웃</a>
                 </div>
         </aside>
         <footer id = "footer">

@@ -18,24 +18,6 @@ nav ul li {
     margin:auto;
 }
 
-#left_sidebar{
-    position:relative;
-    width:15%;
-    height:650px;
-    background-color:gray;
-    float:left;
-}
-
-.sidebar_1{
-    text-align: center;
-    width:70%;
-    height:500px;
-    border: 2px solid;
-    border-radius: 5px;
-    background-color:white;
-    margin:auto;
-}
-
 #right_sidebar{
     width:15%;
     height:600px;
@@ -43,15 +25,6 @@ nav ul li {
     float:left;
 }
 
-.sidebar_2{
-    text-align: center;
-    width:70%;
-    height:500px;
-    border: 2px solid;
-    border-radius: 5px;
-    background-color:white;
-    margin:auto;
-}
 
 #button_l1,#button_l2,#button_l3,#button_l4,#button_l5,#button_l6,#button_l7,#button_l8,#button_l9,#button_f1,#button_f2,#button_f3,#button_f4,#button_f5,#button_f6
 {
@@ -78,6 +51,7 @@ nav ul li {
     text-align: center;
     width:90%;
     height:500px;
+    top: 100px;
     border:2px solid;
     border-radius:5px;
     margin:auto;
