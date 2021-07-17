@@ -13,10 +13,11 @@ const { response } = require('express');
 var Li;
 var css;
 var css2;
+var css3;
 var register;
 var findid;
 var findpw,findpw1,mail_auth,changepw;
-var main,view_all_contents;
+var main,view_all_contents,posting;
 fs.readFile('temp_main.html','utf8',function(err,data){
     if(err){
         return console.error(err);
@@ -28,12 +29,6 @@ fs.readFile('Li.html','utf8',function(err,data){
         return console.error(err);
     }
     Li=data;
-});
-fs.readFile('Li.css','utf8',function(err,data){
-    if(err){
-        return console.error(err);
-    }
-    css=data;
 });
 fs.readFile('register.html','utf8',function(err,data){
     if(err){
@@ -71,18 +66,37 @@ fs.readFile('view_all_contents.html','utf8',function(err,data){
     }
     view_all_contents=data;
 });
-fs.readFile('main_1.css','utf8',function(err,data){
-    if(err){
-        return console.error(err);
-    }
-    css2=data;
-});
 fs.readFile('change_pw.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     changepw=data;
 });
+fs.readFile('posting.html','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    posting=data;
+});
+fs.readFile('Li.css','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    css=data;
+});
+fs.readFile('posting.css','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    css3=data;
+});
+fs.readFile('main_1.css','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    css2=data;
+});
+
 var user=mysql.createConnection({
     host : db_set.host,
     user : db_set.user,
@@ -107,8 +121,30 @@ server.use(express.urlencoded({extended: true}));
 server.listen(8080,function(){
     console.log("서버실행");
 });
-server.get('/main',function(request,response){
+server.get('/Li.css',function(request,response){
+    response.writeHead(200, {"Content-Type": "text/css"});
+    response.write(css);
+    response.end();
+});//complete
+server.get('/main_1.css',function(request,response){
+    response.writeHead(200, {"Content-Type": "text/css"});
+    response.write(css2);
+    response.end();
+});//complete
+server.get('/posting.css',function(request,response){
+    response.writeHead(200, {"Content-Type": "text/css"});
+    response.write(css3);
+    response.end();
+});//complete
+server.get('/posting',function(rerquest,response){
+    response.writeHead(200,{"Content-Type":"text/html"});
+    response.write(posting);
+    response.end();
+});
+server.post('/posting',function(request,response){
 
+});
+server.get('/main',function(request,response){
     console.log(request.cookies.auth);
     if(request.cookies.auth){
         user.query("select * from poster",function(err,results){
@@ -187,16 +223,6 @@ server.post('/',function(request,response){
 server.get('/register',function(request,response){
     response.writeHead(200,{"Content-Type":"text/html"});
     response.write(register);
-    response.end();
-});//complete
-server.get('/Li.css',function(request,response){
-    response.writeHead(200, {"Content-Type": "text/css"});
-    response.write(css);
-    response.end();
-});//complete
-server.get('/main_1.css',function(request,response){
-    response.writeHead(200, {"Content-Type": "text/css"});
-    response.write(css2);
     response.end();
 });//complete
 server.post('/register',function(request,response){
