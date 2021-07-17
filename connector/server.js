@@ -142,7 +142,13 @@ server.get('/posting',function(rerquest,response){
     response.end();
 });
 server.post('/posting',function(request,response){
-
+    user.query('select name from user where id=?',[request.cookies.id],function(err,result){
+        user.query('select id from poster order by id desc',function(err,results){
+            console.log(result[0].name);
+            console.log(results[0].id);
+            user.query('insert into user value(?,?,?,?,?,?)',[results[0].id+1,request.body.title,request.body.content,request.body.option_lang,request.body.option_field,result[0].name]);
+        });
+    });
 });
 server.get('/main',function(request,response){
     console.log(request.cookies.auth);
