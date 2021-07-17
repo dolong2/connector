@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="write.css">
+    <title>CONNECTOR - 글쓰기</title>
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+            <a href=""><h1>CONNECTOR</h1></a>
+            <nav>
+                <ul>
+                </ul>
+            </nav>
+        </header>
+        <section id = "contents">
+            <div class="main_page">
+                <form action="" class="write_form" method="POST">
+                    제목<input type="text" class="text_title" maxlength="25">
+                    <select name="option_lang" class="option_l">
+                        <option value="">언어선택</option>
+                        <option value="C">C</option>
+                        <option value="C++">C++</option>
+                        <option value="C#">C#</option>
+                        <option value="Python">Python</option>
+                        <option value="Java">Java</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="Node.js">Node.js</option>
+                        <option value="Kotlin">Kotlin</option>
+                        <option value="Swift">Swift</option>
+                    </select>
+                    <select name="option_field" class="option_f">
+                        <option value="">분야선택</option>
+                        <option value="Front_end">Front_end</option>
+                        <option value="Back_end">Back_end</option>
+                        <option value="Android">Android</option>
+                        <option value="iOS">iOS</option>
+                        <option value="A.I">A.I</option>
+                        <option value="Game">Game</option>
+                    </select>
+                    <textarea style="resize:none" class="text_contents" cols="150" rows="20"></textarea>
+                    <input type="submit" class="write_submit"value="등록하기">
+                </form>
+            </div>
+        </section>
+        <aside id = "right_sidebar">
+            <div class="personal_information">
+                <div class="left_sidebar_form">
+                    <p class="my_infromation"><strong>내 정보</strong></p>
+                    <div class="line"></div>
+                        <a href="">정보수정</a>
+                        <a href="">로그아웃</a>
+                    <form action="" method="GET">
+                </div>
+        </aside>
+        <footer id = "footer">
+            푸터
+
+        </footer>
+    </div>
+</body>
+</html>

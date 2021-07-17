@@ -1,0 +1,112 @@
+*{
+    margin:0;
+}
+a:visited{
+    color: black;
+  }
+  a:link{
+      color:black;
+  }
+.line{
+    border: 0.1px solid black; width: 90%; height: 0px; margin:auto;
+}
+
+
+#header{
+    width:100%;
+    height:50px;
+    background-color:honeydew;
+}
+
+
+#right_sidebar{
+    position:relative;
+    width:15%;
+    height:650px;
+    background-color:gray;
+    float:left;
+}
+.personal_information{
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:90%;
+    height:550px;
+    border: 2px solid;
+    border-radius: 5px;
+    background-color:white;
+}
+.my_infromation{
+    font-size:x-large;
+}
+
+
+#contents{
+    position: relative;
+    width:85%;
+    height:650px;
+    float:left;
+}
+.main_page{
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:90%;
+    height:550px;
+    border:2px solid;
+    border-radius:5px;
+    margin:auto;
+}
+.text_title{
+    position: absolute;
+    top:10%;
+    left:10%;
+    width:50%;
+}
+select{
+    position:absolute;
+    width: 200px;
+    padding: .8em .5em;
+    border: 1px solid #999;
+    font-family: inherit;
+    background: url('arrow.jpg') no-repeat 95% 50%;
+    border-radius: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.option_l{
+    position: absolute;
+    top:7%;
+    left: 62%;
+}
+.option_f{
+    position: absolute;
+    top:7%;
+    left: 80%;
+}
+.text_contents{
+    font-size: 12pt;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:90%;
+}
+.write_submit{
+    position: absolute;
+    bottom:10%;
+    left:85%;
+}
+
+
+#footer{
+    width:100%;
+    height:50px;
+    background-color:honeydew;
+    clear:left;
+}
