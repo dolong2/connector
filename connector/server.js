@@ -9,6 +9,7 @@ var ejs=require('ejs');
 var mysql=require("mysql");
 var cookieParser = require('cookie-parser');
 const { response } = require('express');
+const { request } = require('http');
 
 var Li;
 var css;
@@ -136,10 +137,15 @@ server.get('/posting.css',function(request,response){
     response.write(css3);
     response.end();
 });//complete
-server.get('/posting',function(rerquest,response){
-    response.writeHead(200,{"Content-Type":"text/html"});
-    response.write(posting);
-    response.end();
+server.get('/posting',function(request,response){
+    if(request.cookies.id){
+        response.writeHead(200,{"Content-Type":"text/html"});
+        response.write(posting);
+        response.end();
+    }
+    else{
+        response.send("<script type='text/javascript'>alert('로그인 먼저 해주세요');document.location.href='/';</script>");
+    }
 });
 server.post('/posting',function(request,response){
     user.query('select name from user where id=?',[request.cookies.id],function(err,result){
@@ -151,8 +157,8 @@ server.post('/posting',function(request,response){
     });
 });
 server.get('/main',function(request,response){
-    console.log(request.cookies.auth);
-    if(request.cookies.auth){
+    console.log(request.cookies.id);
+    if(request.cookies.id){
         user.query("select * from poster",function(err,results){
             user.query("select *from user where id=?",[request.cookies.id],(err,result)=>{
                 console.log(result[0].language);
@@ -169,7 +175,7 @@ server.get('/main',function(request,response){
 });
 server.get('/viewallcontents/:id',function(request,response){
     console.log(request.params.id);
-    if(request.cookies.auth){
+    if(request.cookies.id){
         user.query("select *from poster where id=?",[request.params.id],function(err,result){
             response.send(ejs.render(view_all_contents,{
                 data:result[0]
@@ -181,7 +187,7 @@ server.get('/viewallcontents/:id',function(request,response){
     }
 });
 server.get('/',function(request,response){
-    if(request.cookies.auth){
+    if(request.cookies.id){
         response.redirect('/main')
     }
     else{
@@ -210,7 +216,6 @@ server.post('/',function(request,response){
                 console.log(hashed);
                 if(hashed==pw){
                     console.log("로그인 성공~!");
-                    response.cookie('auth',true);
                     response.cookie('id',request.body.id);
                     response.send("<script>alert('로그인 되셨습니다');document.location.href='/main';</script>");
                 }
