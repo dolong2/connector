@@ -18,7 +18,7 @@ var css3;
 var register;
 var findid;
 var findpw,findpw1,mail_auth,changepw;
-var main,view_all_contents,posting;
+var main,view_all_contents,posting,eidtinfor;
 fs.readFile('temp_main.html','utf8',function(err,data){
     if(err){
         return console.error(err);
@@ -97,6 +97,12 @@ fs.readFile('main_1.css','utf8',function(err,data){
     }
     css2=data;
 });
+fs.readFile('editinfor.html','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    eidtinfor=data;
+});
 
 var user=mysql.createConnection({
     host : db_set.host,
@@ -148,7 +154,7 @@ server.get('/posting',function(request,response){
     else{
         response.send("<script type='text/javascript'>alert('로그인 먼저 해주세요');document.location.href='/';</script>");
     }
-});
+});//complete
 server.post('/posting',function(request,response){
     user.query('select name from user where id=?',[request.cookies.id],function(err,result){
         user.query('select id from poster order by id desc',function(err,results){
@@ -157,7 +163,16 @@ server.post('/posting',function(request,response){
             user.query('insert into poster value(?,?,?,?,?,?)',[results[0].id+1,request.body.title,request.body.content,request.body.option_lang,request.body.option_field,result[0].name]);
         });
     });
-});
+});//complete
+server.get('/editinfor/:id',(request,response)=>{
+    if(request.cookies.id){
+        user.query('select *from user where id=?',[request.params.id],(err,result)=>{
+            response.send(ejs.render(eidtinfor,{
+                data:result[0]
+            }));
+        });
+    }
+});//complete
 server.get('/main',function(request,response){
     console.log(request.cookies.id);
     if(request.cookies.id){
