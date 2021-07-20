@@ -46,8 +46,9 @@
         <aside id = "right_sidebar">
             <div class="personal_information">
                 <div class="left_sidebar_form">
-                    <p class="my_infromation"><strong>내 정보</strong></p>
+                    <a href="./editinfor/<%= data.id %>"style="text-decoration:none"><p class="my_infromation"><strong>내 정보</strong></p></a>
                     <div class="line"></div>
+                    <br>
                     <h4>아이디: <%= data.id %></h4>
                         <br>
                         <h4>이름: <%= data.name %></h4>
@@ -58,7 +59,7 @@
                         <br>
                         <h4>기수: <%= data.jockey %></h4>
                         <br>
-                        <a href=""style="text-decoration:none">정보수정</a>
+                        <a href="./posting"style="text-decoration:none">글쓰기</a>
                         <a href="/logout"style="text-decoration:none">로그아웃</a>
                 </div>
         </aside>

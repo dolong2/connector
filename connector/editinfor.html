@@ -10,5 +10,28 @@
     <h1><%= data.jockey %></h1>
     <h1><%= data.language%></h1>
     <h1><%= data.class %></h1>
+        제목<input type="text" class="text_title" maxlength="25" name="title"autocomplete="off">
+                    <select name="option_lang" class="option_l">
+                        <option>언어선택</option>
+                        <option value="C">C</option>
+                        <option value="C++">C++</option>
+                        <option value="C#">C#</option>
+                        <option value="Python">Python</option>
+                        <option value="Java">Java</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="Kotlin">Kotlin</option>
+                        <option value="Swift">Swift</option>
+                    </select>
+                    <select name="option_field" class="option_f">
+                        <option value="">분야선택</option>
+                        <option value="Front_end">Front_end</option>
+                        <option value="Back_end">Back_end</option>
+                        <option value="Android">Android</option>
+                        <option value="iOS">iOS</option>
+                        <option value="A.I">A.I</option>
+                        <option value="Game">Game</option>
+                    </select>
+                    <textarea name="content"style="resize:none" class="text_contents" cols="150" rows="20"></textarea>
+                    <input type="submit" class="write_submit"value="등록하기">
 </body>
 </html>

@@ -125,9 +125,9 @@ var server=express();
 server.use(cookieParser());
 server.use(express.urlencoded({extended: true}));
 
-server.listen(8080,function(){
+server.listen(8000,function(){
     console.log("서버실행");
-});
+});//complete
 server.get('/Li.css',function(request,response){
     response.writeHead(200, {"Content-Type": "text/css"});
     response.write(css);
@@ -189,7 +189,7 @@ server.get('/main',function(request,response){
     else{
         response.send("<script type='text/javascript'>alert('로그인 먼저 해주세요');document.location.href='/';</script>");
     }
-});
+});//complete
 server.get('/viewallcontents/:id',function(request,response){
     console.log(request.params.id);
     if(request.cookies.id){
@@ -202,7 +202,7 @@ server.get('/viewallcontents/:id',function(request,response){
     else{
         response.send('<script type="text/javascript"charset="utf-8">alert("로그인 먼저 해주세요");document.location.href="/";</script>');
     }
-});
+});//complete
 server.get('/',function(request,response){
     if(request.cookies.id){
         response.redirect('/main')
