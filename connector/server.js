@@ -189,7 +189,7 @@ server.get('/main',function(request,response){
     else{
         response.send("<script type='text/javascript'>alert('로그인 먼저 해주세요');document.location.href='/';</script>");
     }
-});//complete
+});
 server.get('/viewallcontents/:id',function(request,response){
     console.log(request.params.id);
     if(request.cookies.id){
