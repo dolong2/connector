@@ -2,13 +2,19 @@ const express=require('express');
 const fs=require('fs');
 const app = express();
 const http = require("http");
-var cookieParser = require('cookie-parser');
 const server = http.createServer(app);
 var io=require('socket.io')(server);
 var db_set=require('./db_infor.json');
 var mysql=require("mysql");
 
-var roomname;
+let roomname;
+var name;
+fs.readFile('chat.js','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    chatjs=data;
+});
 var user=mysql.createConnection({
     host : db_set.host,
     user : db_set.user,
@@ -25,12 +31,16 @@ app.get("/:id", (req, res) => {
         res.end(data);
     });
     roomname=req.params.id;
+    /*user.query('select name from user where id=?',[req.cookies.id],(err,result)=>{
+        name=result[0].name;
+        console.log(name);
+    });*/
 });
-
 io.sockets.on("connection", (socket) => {
     console.log('연결!');
     console.log(roomname);
     socket.join(roomname);
+    io.in(roomname).emit('in');
     socket.on("message", data => {
         user.query("select name from user where id=?",[data.name],function(err,result){
             console.log(data.name);

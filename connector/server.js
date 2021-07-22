@@ -18,7 +18,7 @@ var css3;
 var register;
 var findid;
 var findpw,findpw1,mail_auth,changepw;
-var main,view_all_contents,posting,eidtinfor;
+var main,view_all_contents,posting,eidtinfor,chatjs;
 fs.readFile('temp_main.html','utf8',function(err,data){
     if(err){
         return console.error(err);
@@ -160,7 +160,14 @@ server.post('/posting',function(request,response){
         user.query('select id from poster order by id desc',function(err,results){
             console.log(result[0].name);
             console.log(request.body.title);
-            user.query('insert into poster value(?,?,?,?,?,?)',[results[0].id+1,request.body.title,request.body.content,request.body.option_lang,request.body.option_field,result[0].name]);
+            user.query('insert into poster value(?,?,?,?,?,?)',[results[0].id+1,request.body.title,request.body.content,request.body.option_lang,request.body.option_field,result[0].name],(err,result)=>{
+                if(err){
+                    response.send('<script type="text/javascript">alert("글 등록 중 에러가 발생했습니다");document.location.href="/posting";</script>');
+                }
+                else {
+                    response.send('<script type="text/javascript">alert("글이 정상적으로 등록되었습니다");document.location.href="/";</script>');
+                }
+            });
         });
     });
 });//complete

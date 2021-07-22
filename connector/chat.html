@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <link rel="icon" href="data:,">
-        <title>Simple Chat</title>
+        <title>CONNECTOR - Simple Chat</title>
         <script src="./socket.io/socket.io.js"></script>
         <script>
             let socket;
@@ -11,6 +11,10 @@
             	// socket 연결
                 socket = io.connect();
 
+                socket.on('in',()=>{
+                    var name=getCookie('id');
+                    makeEnterDiv(name);
+                });
 			// message 수신 이벤트
                 socket.on('message', (name,content) => {
                     makeChatDiv(name, content);
@@ -18,7 +22,10 @@
             }
 			// 버튼 클릭 시 메시지 송신
             const sendMessage = () => {
+                var objDiv=document.getElementById("chatbox").scrollHeight;
+                document.getElementById("chatbox").scrollTop=objDiv;
                 let content = document.getElementById('content').value;
+                //document.getElementById( 'content' ).removeAttribute( 'required' );
                 document.getElementById('content').value = '';
                 var name = getCookie("id");
                 socket.emit('message', {
@@ -47,31 +54,116 @@
                 let div = document.createElement('div');
                 let nameH3 = document.createElement('h3');
                 let contentP = document.createElement('p');
+                let date = document.createElement('span');
+                var min=new Date().getMinutes(),hour=new Date().getHours();
 
+                if(min<10){min='0'+min;}
+                if(hour<10){hour='0'+hour}
                 nameH3.innerHTML = name;
                 contentP.innerHTML = content;
+                date.innerHTML=hour+':'+min;
 
                 div.appendChild(nameH3);
+                div.appendChild(date);
                 div.appendChild(contentP);
 
                 div.className = "chat"
-
-                document.getElementById('chatbox').prepend(div);
+                document.getElementById('chatbox').appendChild(div);
             }
+            const makeEnterDiv=(name)=>{
+                let div=document.createElement('div');
+                div.className="enter"
+                let nameP=document.createElement('p');
+                nameP.innerHTML=name+'님이 입장하셨습니다';
+
+                div.appendChild(nameP);
+
+                document.getElementById('chatbox').appendChild(div);
+            };
         </script>
         <style>
+            *{
+                margin:0;
+            }
+            h1{
+            float:left;
+            }
             .chat {
+                border: 1px solid black;
+                width: 400px;
+            }
+            #header{
+                width:100%;
+                height:50px;
+                background-color:honeydew;
+            }
+            .main_page{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width:90%;
+                height:80%;
+                border:2px solid;
+                border-radius:5px;
+                margin:auto;
+            }
+            .content{
+                width:75%;
+            }
+            .message{
+                text-align: center;
+                width:100%;
+                position: absolute;
+                left:25px;
+                bottom: 25px;
+            }
+            .box{
+                border: 2px solid black;
+            }
+            a:visited{
+                color: black;
+              }
+              a:link{
+                color:black;
+              }
+              .chatbox{
+                overflow-Y:scroll;width:100%;
+                height:90%;
+              }
+              .enter {
                 border: 1px solid black;
                 width: 400px;
             }
         </style>
     </head>
     <body>
-        <a href="http://10.120.74.53:8000"><h1>Simple Chat</h1></a>
-        <input id="content" type="text" placeholder="content" />
-        <button onclick="sendMessage()">보내기</button>
-        <hr/>
-        <div id="chatbox">
+        <div id="container">
+            <header id="header">
+                <a href="http://10.120.74.53:8000"><h1>Simple Chat</h1></a>
+                <nav>
+                    <ul>
+                    </ul>
+                </nav>
+            </header>
+            <section class = "contents">
+                <div class="main_page">
+                    <div class="chatbox_title"></div>
+                    <div id="chatbox"class="chatbox"></div>
+                    <div class="message">
+                        <form>
+                            <input id="content" type="text" placeholder="content"  maxlength="23"autocomplete="off"required/>
+                            <input type="submit" onclick="if(document.getElementById('content').value.length!=0){sendMessage()}" value="보내기"/>
+                        </form> 
+                    </div>
+                </div>
+            </section>
+            <aside id = "right_sidebar">
+                <div class="personal_inf">
+                    
+                </div>
+            </aside>
         </div>
+        <hr/>
     </body>
 </html>

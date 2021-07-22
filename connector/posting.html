@@ -17,7 +17,7 @@
         <section id = "contents">
             <div class="main_page">
                 <form action="/posting" class="write_form" method="POST">
-                    제목<input type="text" class="text_title" maxlength="25" name="title"autocomplete="off">
+                    <input type="text" class="text_title" maxlength="25" name="title" placeholder="제목입력"autocomplete="off"required><br>
                     <select name="option_lang" class="option_l" required>
                         <!-- <option value="">언어선택</option> -->
                         <option value="C">C</option>
@@ -38,7 +38,7 @@
                         <option value="A.I">A.I</option>
                         <option value="Game">Game</option>
                     </select>
-                    <textarea name="content"style="resize:none" class="text_contents" cols="150" rows="20"></textarea>
+                    <textarea name="content"style="resize:none" class="text_contents" cols="150" rows="20" placeholder="내용입력"required></textarea>
                     <input type="submit" class="write_submit"value="등록하기">
                 </form>
             </div>
