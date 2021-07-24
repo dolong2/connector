@@ -41,6 +41,12 @@ io.sockets.on("connection", (socket) => {
     console.log(roomname);
     socket.join(roomname);
     io.in(roomname).emit('in');
+    socket.on('in',name=>{
+        user.query('select name from user where id=?',[name.name],(err,result)=>{
+            console.log(result[0].name);
+            io.to(roomname).emit('in',result[0].name);
+        });
+    })
     socket.on("message", data => {
         user.query("select name from user where id=?",[data.name],function(err,result){
             console.log(data.name);
@@ -48,6 +54,9 @@ io.sockets.on("connection", (socket) => {
             console.log(data.content);
             io.to(roomname).emit("message", result[0].name,data.content);
         });
+    });
+    socket.on('disconnection',()=>{
+        console.log("연결이 끊김");
     });
 });
 
