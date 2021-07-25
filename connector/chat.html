@@ -16,8 +16,7 @@
                 });
                 socket.on('in',(name)=>{
                     makeEnterDiv(name);
-                })
-                makeEnterDiv(name);
+                });
 			// message 수신 이벤트
                 socket.on('message', (name,content) => {
                     makeChatDiv(name, content);
@@ -28,9 +27,9 @@
                 var objDiv=document.getElementById("chatbox").scrollHeight;
                 document.getElementById("chatbox").scrollTop=objDiv;
                 let content = document.getElementById('content').value;
-                document.getElementById( 'content' ).removeAttribute( 'required' );
+                //document.getElementById( 'content' ).removeAttribute( 'required' );
                 document.getElementById('content').value = '';
-                document.getElementById('content').setAttribute('required');
+                //document.getElementById('content').setAttribute('required');
                 var name = getCookie("id");
                 socket.emit('message', {
                     name,
@@ -157,7 +156,7 @@
                     <div class="message">
                         <form>
                             <input id="content" type="text" placeholder="content"  maxlength="23"autocomplete="off" required/>
-                            <input type="submit" onsubmit="if(document.getElementById('content').value.length!=0){sendMessage()}" value="보내기"/>
+                            <input type="submit" onclick="if(document.getElementById('content').value.length!=0){sendMessage()}" value="보내기"/>
                         </form> 
                     </div>
                 </div>

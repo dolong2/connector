@@ -36,12 +36,13 @@ app.get("/:id", (req, res) => {
         console.log(name);
     });*/
 });
+
 io.sockets.on("connection", (socket) => {
     console.log('연결!');
     console.log(roomname);
     socket.join(roomname);
-    io.in(roomname).emit('in');
-    socket.on('in',name=>{
+    socket.on('in',(name)=>{
+        console.log(name.name);
         user.query('select name from user where id=?',[name.name],(err,result)=>{
             console.log(result[0].name);
             io.to(roomname).emit('in',result[0].name);
