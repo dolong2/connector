@@ -153,10 +153,8 @@
                 <div class="main_page">
                     <div id="chatbox"class="chatbox"></div>
                     <div class="message">
-                        <form>
-                            <input id="content" type="text" placeholder="content"  maxlength="23"autocomplete="off" required/>
-                            <input type="submit" onclick="if(document.getElementById('content').value.length!=0){sendMessage()}" value="보내기"/>
-                        </form>
+                            <input id="content" type="text" placeholder="content"  maxlength="23"autocomplete="off" onkeyup="if(window.event.keyCode==13){if(document.getElementById('content').value.length==0){}else{sendMessage()}}" />
+                            <input type="button" onclick="if(document.getElementById('content').value.length==0){}else{sendMessage()}" onsubmit="return isValidSubmit()" value="보내기"/>
                     </div>
                 </div>
             </section>

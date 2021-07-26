@@ -54,6 +54,7 @@ io.sockets.on("connection", (socket) => {
             console.log(result[0].name);
             console.log(data.content);
             io.to(roomname).emit("message", result[0].name,data.content);
+            console.log("메세지가 보내짐");
         });
     });
     socket.on('disconnection',()=>{
