@@ -78,7 +78,6 @@
                 div.className="enter"
                 let nameP=document.createElement('p');
                 nameP.innerHTML=name+'님이 입장하셨습니다';
-
                 div.appendChild(nameP);
                 document.getElementById('chatbox').appendChild(div);
             };
@@ -125,16 +124,17 @@
             }
             a:visited{
                 color: black;
-              }
-              a:link{
+            }
+            a:link{
                 color:black;
-              }
-              .chatbox{
+            }
+            .chatbox{
+                background-color: rgb(253, 253, 236);
                 overflow-Y:scroll;width:100%;
                 height:90%;
-              }
-              .enter {
-                  text-align: center;
+            }
+            .enter {
+                text-align: center;
                 background-color: rgb(253, 253, 236);
                 width: 100%;
             }
@@ -151,13 +151,12 @@
             </header>
             <section class = "contents">
                 <div class="main_page">
-                    <div class="chatbox_title"></div>
                     <div id="chatbox"class="chatbox"></div>
                     <div class="message">
                         <form>
                             <input id="content" type="text" placeholder="content"  maxlength="23"autocomplete="off" required/>
                             <input type="submit" onclick="if(document.getElementById('content').value.length!=0){sendMessage()}" value="보내기"/>
-                        </form> 
+                        </form>
                     </div>
                 </div>
             </section>
