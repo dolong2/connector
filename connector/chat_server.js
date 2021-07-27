@@ -8,13 +8,6 @@ var db_set=require('./db_infor.json');
 var mysql=require("mysql");
 
 let roomname;
-var name;
-fs.readFile('chat.js','utf8',function(err,data){
-    if(err){
-        return console.error(err);
-    }
-    chatjs=data;
-});
 var user=mysql.createConnection({
     host : db_set.host,
     user : db_set.user,
@@ -36,7 +29,6 @@ app.get("/:id", (req, res) => {
         console.log(name);
     });*/
 });
-
 io.sockets.on("connection", (socket) => {
     console.log('연결!');
     console.log(roomname);
