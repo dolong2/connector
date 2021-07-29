@@ -4,149 +4,9 @@
         <meta charset="UTF-8">
         <link rel="icon" href="data:,">
         <title>CONNECTOR - Simple Chat</title>
+        <link rel="stylesheet" href="./chat.css">
         <script src="./socket.io/socket.io.js"></script>
-        <script>
-            let socket;
-            window.onload = () => {
-            	// socket 연결
-                socket = io.connect();
-
-                socket.emit('in',{
-                    name: getCookie('id'),
-                });
-                socket.on('in',(name)=>{
-                    makeEnterDiv(name);
-                });
-			// message 수신 이벤트
-                socket.on('message', (name,content) => {
-                    makeChatDiv(name, content);
-                });
-            }
-			// 버튼 클릭 시 메시지 송신
-            const sendMessage = () => {
-                var objDiv=document.getElementById("chatbox").scrollHeight;
-                document.getElementById("chatbox").scrollTop=objDiv;
-                let content = document.getElementById('content').value;
-                //document.getElementById( 'content' ).removeAttribute( 'required' );
-                document.getElementById('content').value = '';
-                //document.getElementById('content').setAttribute('required');
-                var name = getCookie("id");
-                socket.emit('message', {
-                    name,
-                    content
-                });
-            }
-            function getCookie(name) {
-                var nameOfCookie = name + "=";
-                var x = 0;
-                while (x <= document.cookie.length) {
-                    var y = (x + nameOfCookie.length);
-                     if (document.cookie.substring(x, y) == nameOfCookie) {
-                          if ((endOfCookie = document.cookie.indexOf(";", y)) == -1)
-                               endOfCookie = document.cookie.length;
-                          return unescape(document.cookie.substring(y, endOfCookie));
-                     }
-                    x = document.cookie.indexOf(" ", x) + 1;
-                    if (x == 0)
-                        break;
-                }
-                return "";
-           }
-			// message 수신 시 채팅 컴포넌트 생성
-            const makeChatDiv = (name, content) => {
-                let div = document.createElement('div');
-                let nameH3 = document.createElement('h3');
-                let contentP = document.createElement('p');
-                let date = document.createElement('span');
-                var min=new Date().getMinutes(),hour=new Date().getHours();
-
-                if(min<10){min='0'+min;}
-                if(hour<10){hour='0'+hour}
-                nameH3.innerHTML = name;
-                contentP.innerHTML = content;
-                date.innerHTML=hour+':'+min;
-
-                div.appendChild(nameH3);
-                div.appendChild(date);
-                div.appendChild(contentP);
-
-                div.className = "chat"
-                document.getElementById('chatbox').appendChild(div);
-            }
-            const makeEnterDiv=(name)=>{
-                let div=document.createElement('div');
-                div.className="enter"
-                let nameP=document.createElement('p');
-                nameP.innerHTML=name+'님이 입장하셨습니다';
-                div.appendChild(nameP);
-                document.getElementById('chatbox').appendChild(div);
-            };
-        </script>
-        <style>
-            *{
-                margin:0;
-            }
-            h1{
-            float:left;
-            }
-            .chat {
-                border: 1px solid black;
-                width: 400px;
-            }
-            #header{
-                width:100%;
-                height:50px;
-                background-color:honeydew;
-            }
-            .main_page{
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width:90%;
-                height:80%;
-                border:2px solid;
-                border-radius:5px;
-                margin:auto;
-            }
-            .content{
-                width:75%;
-            }
-            .message{
-                text-align: center;
-                width:100%;
-                position: absolute;
-                left:25px;
-                bottom: 25px;
-            }
-            .box{
-                border: 2px solid black;
-            }
-            a:visited{
-                color: black;
-            }
-            a:link{
-                color:black;
-            }
-            .chatbox{
-                background-color: rgb(253, 253, 236);
-                overflow-Y:scroll;width:100%;
-                height:90%;
-            }
-            .enter {
-                text-align: center;
-                background-color: rgb(253, 253, 236);
-                width: 100%;
-            }
-            .content{
-                width: 80%;
-                line-height:30%
-            }
-            .send{
-                height: 100%;
-                width: 10%
-            }
-        </style>
+        <script src="./chat.js"></script>
     </head>
     <body>
         <div id="container">
@@ -172,6 +32,5 @@
                 </div>
             </aside>
         </div>
-        <hr/>
     </body>
 </html>

@@ -15,19 +15,38 @@ var user=mysql.createConnection({
     database : db_set.database
 });
 app.get("/:id", (req, res) => {
-    fs.readFile("./chat.html", (error, data) => {
-        if (error) {
-            console.log(error);
-            return res.sendStatus(500);
-        }
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(data);
-    });
-    roomname=req.params.id;
-    /*user.query('select name from user where id=?',[req.cookies.id],(err,result)=>{
-        name=result[0].name;
-        console.log(name);
-    });*/
+    console.log(req.url);
+    if(req.url=='/chat.js'){
+        fs.readFile("./chat.js", (error, data) => {
+            if (error) {
+                console.log(error);
+                return res.sendStatus(500);
+            }
+            res.writeHead(200, { "Content-Type": "text/javascript" });
+            res.end(data);
+        });
+    }
+    else if(req.url=='/chat.css'){
+        fs.readFile("./chat.css", (error, data) => {
+            if (error) {
+                console.log(error);
+                return res.sendStatus(500);
+            }
+            res.writeHead(200, { "Content-Type": "text/css" });
+            res.end(data);
+        });
+    }
+    else{
+        fs.readFile("./chat.html", (error, data) => {
+            if (error) {
+                console.log(error);
+                return res.sendStatus(500);
+            }
+            res.writeHead(200, { "Content-Type": "text/html" });
+            res.end(data);
+        });
+        roomname=req.params.id;
+    }
 });
 io.sockets.on("connection", (socket) => {
     console.log('연결!');
