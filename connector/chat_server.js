@@ -15,7 +15,6 @@ var user=mysql.createConnection({
     database : db_set.database
 });
 app.get("/:id", (req, res) => {
-    console.log(req.url);
     if(req.url=='/chat.js'){
         fs.readFile("./chat.js", (error, data) => {
             if (error) {

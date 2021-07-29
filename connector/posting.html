@@ -8,7 +8,7 @@
 <body>
     <div id="container">
         <header id="header">
-            <a href="/main"style="text-decoration:none"><h1>CONNECTOR</h1></a>
+            <a href="/main" style="text-decoration:none"><h1>CONNECTOR</h1></a>
             <nav>
                 <ul>
                 </ul>
@@ -17,7 +17,7 @@
         <section id = "contents">
             <div class="main_page">
                 <form action="/posting" class="write_form" method="POST">
-                    <input type="text" class="text_title" maxlength="25" name="title" placeholder="제목입력"autocomplete="off"required><br>
+                    <input type="text" class="text_title" maxlength="25" name="title" placeholder="제목입력" autocomplete="off" required>
                     <select name="option_lang" class="option_l" required>
                         <!-- <option value="">언어선택</option> -->
                         <option value="C">C</option>
@@ -44,9 +44,8 @@
             </div>
         </section>
         <aside id = "right_sidebar">
-            <div class="personal_information">
-                <div class="left_sidebar_form">
-                    <a href="./editinfor/<%= data.id %>"style="text-decoration:none"><p class="my_infromation"><strong>내 정보</strong></p></a>
+            <div class="personal_inf">
+                    <a href="./editinfor/<%= data.id %>"style="text-decoration:none"><p class="inf_font"><strong>내 정보</strong></p></a>
                     <div class="line"></div>
                     <br>
                     <h4>아이디: <%= data.id %></h4>
@@ -65,7 +64,6 @@
         </aside>
         <footer id = "footer">
             푸터
-
         </footer>
     </div>
 </body>

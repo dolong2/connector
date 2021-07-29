@@ -18,7 +18,7 @@ var css3;
 var register;
 var findid;
 var findpw,findpw1,mail_auth,changepw;
-var main,view_all_contents,posting,eidtinfor,chatjs;
+var main,view_all_contents,posting,eidtinfor;
 fs.readFile('temp_main.html','utf8',function(err,data){
     if(err){
         return console.error(err);
