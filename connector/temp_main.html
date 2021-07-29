@@ -15,28 +15,57 @@
                 </ul>
             </nav>
         </header>
-        <aside id="right_sidebar">
-            <div class="personal_information">
-                <div >
-                    <p><strong>언어</strong></p>
-                    <form action="" method="GET">
-                        <input type="submit" id="button_l1" value="C">
-                        <input type="submit" id="button_l2" value="C++">
-                        <input type="submit" id="button_l3" value="C#">
-                        <input type="submit" id="button_l4" value="Python">
-                        <input type="submit" id="button_l5" value="Java">
-                        <input type="submit" id="button_l6" value="JavaScript">
-                        <input type="submit" id="button_l8" value="Kotlin">
-                        <input type="submit" id="button_l9" value="Swift">
+        <aside id="l_side">
+            <div class="l_side_form">
+                <div class="div">
+                    <p class="left_font"><strong>언어</strong></p>
+                    <div class="line"></div>
+                    <form action="" class="filter_3" method="POST">
+                        <input type="submit" class="button" value="C">
                     </form>
-                    <p><strong>분야</strong></p>
-                    <form action="" method="GET">
-                        <input type="submit" id="button_f1" value="Front_end">
-                        <input type="submit" id="button_f2" value="Back_end">
-                        <input type="submit" id="button_f3" value="Android">
-                        <input type="submit" id="button_f4" value="iOS">
-                        <input type="submit" id="button_f5" value="A.I">
-                        <input type="submit" id="button_f6" value="Game">
+                    <form action="" class="filter_3" method="POST">
+                        <input type="submit" class="button" value="C++">
+                    </form>
+                    <form action="" class="filter_3" method="POST">
+                        <input type="submit" class="button" value="C#">
+                    </form>
+                    <form action="" class="filter_2" method="POST">
+                        <input type="submit" class="button" value="Python">
+                    </form>
+                    <form action="" class="filter_2" method="POST">
+                        <input type="submit" class="button" value="Java">
+                    </form>
+                    <form action="" class="filter_1" method="POST">
+                        <input type="submit" class="button" value="JavaScript">
+                    </form>
+                    <form action="" class="filter_2" method="POST">
+                        <input type="submit" class="button" value="Node.js">
+                    </form>
+                    <form action="" class="filter_2" method="POST">
+                        <input type="submit" class="button" value="Kotlin">
+                    </form>
+                    <form action="" class="filter_1" method="POST">
+                        <input type="submit" class="button" value="Swift">
+                    </form>
+                    <p class="left_font"><strong>분야</strong></p>
+                    <div class="line"></div>
+                    <form action="" class="filter_2" method="POST">
+                        <input type="submit" class="button" value="Front_end">
+                    </form>
+                    <form action="" class="filter_2" method="POST">
+                        <input type="submit" class="button" value="Back_end">
+                    </form>
+                    <form action="" class="filter_2" method="POST">
+                        <input type="submit" class="button" value="Android">
+                    </form>
+                    <form action="" class="filter_2" method="POST">
+                        <input type="submit" class="button" value="iOS">
+                    </form>
+                    <form action="" class="filter_2" method="POST">
+                        <input type="submit" class="button" value="A.I">
+                    </form>
+                    <form action="" class="filter_2" method="POST">
+                        <input type="submit" class="button" value="Game">
                     </form>
                 </div>
         </aside>
@@ -66,12 +95,11 @@
             </div>
             </div>
         </section>
-        <aside id = "right_sidebar">
-            <div class="personal_information">
-
+        <aside id = "r_side">
+            <div class="personal_inf">
                 <div>
-                    <a href="./editinfor/<%= data.id %>"style="text-decoration:none"><p class="my_infromation"><strong>내 정보</strong></p></a>
-                    <div class="line"></div><br>
+                    <a href="./editinfor/<%= data.id %>" style="text-decoration:none"><p class="right_font"><strong>내 정보</strong></p></a>
+                    <div class="line"></div>
                         <h4>아이디: <%= data.id %></h4>
                         <br>
                         <h4>이름: <%= data.name %></h4>
@@ -82,8 +110,8 @@
                         <br>
                         <h4>기수: <%= data.jockey %></h4>
                         <br>
-                        <a href="./posting"style="text-decoration:none">글쓰기</a>
-                        <a href="/logout"style="text-decoration:none">로그아웃</a>
+                        <a href="./posting" style="text-decoration:none">글쓰기</a>
+                        <a href="/logout" style="text-decoration:none">로그아웃</a>
                 </div>
         </aside>
         <footer id = "footer">
