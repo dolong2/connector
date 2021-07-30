@@ -8,6 +8,7 @@ var db_set=require('./db_infor.json');
 var mysql=require("mysql");
 
 let roomname;
+let name;
 var user=mysql.createConnection({
     host : db_set.host,
     user : db_set.user,
@@ -67,8 +68,9 @@ io.sockets.on("connection", (socket) => {
             console.log("메세지가 보내짐");
         });
     });
-    socket.on('disconnection',()=>{
-        console.log("연결이 끊김");
+    socket.on('disconnect',()=>{
+        console.log('연결이 끊김');
+        io.to(roomname).emit('exit_chat');
     });
 });
 

@@ -13,6 +13,9 @@ let socket;
                 socket.on('message', (name,content) => {
                     makeChatDiv(name, content);
                 });
+                socket.on('exit_chat',()=>{
+                    makeExitDiv(user_name);
+                });
             }
 			// 버튼 클릭 시 메시지 송신
             const sendMessage = () => {
@@ -70,6 +73,14 @@ let socket;
                 div.className="enter"
                 let nameP=document.createElement('p');
                 nameP.innerHTML=name+'님이 입장하셨습니다';
+                div.appendChild(nameP);
+                document.getElementById('chatbox').appendChild(div);
+            };
+            const makeExitDiv=(name)=>{
+                let div=document.createElement('div');
+                div.className="enter"
+                let nameP=document.createElement('p');
+                nameP.innerHTML=name+'님이 퇴장하셨습니다';
                 div.appendChild(nameP);
                 document.getElementById('chatbox').appendChild(div);
             };
