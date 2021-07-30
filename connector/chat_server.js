@@ -8,7 +8,6 @@ var db_set=require('./db_infor.json');
 var mysql=require("mysql");
 
 let roomname;
-let name;
 var user=mysql.createConnection({
     host : db_set.host,
     user : db_set.user,
