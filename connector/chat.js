@@ -14,7 +14,7 @@ let socket;
                     makeChatDiv(name, content);
                 });
                 socket.on('exit_chat',()=>{
-                    makeExitDiv(user_name);
+                    makeExitDiv();
                 });
             }
 			// 버튼 클릭 시 메시지 송신
@@ -80,7 +80,7 @@ let socket;
                 let div=document.createElement('div');
                 div.className="enter"
                 let nameP=document.createElement('p');
-                nameP.innerHTML=name+'님이 퇴장하셨습니다';
+                nameP.innerHTML='퇴장하셨습니다';
                 div.appendChild(nameP);
                 document.getElementById('chatbox').appendChild(div);
             };
