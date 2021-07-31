@@ -23,3 +23,6 @@ cursor.execute(sql)
 result=cursor.fetchall()
 for a in result:
     lang[a['language']]+=1
+a=sorted(lang.values(), key=lambda x: x, reverse=True)[0:3]
+print(a)
+x=np.arange(3)
