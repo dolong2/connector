@@ -33,5 +33,5 @@ x=np.arange(5)
 
 plt.bar(x, lang_value_top5)
 plt.xticks(x, lang_top5)
-plt.savefig('connector/graph.png')
+plt.savefig('connector/language_graph.png')
 plt.show()
