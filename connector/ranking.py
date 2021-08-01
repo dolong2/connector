@@ -24,14 +24,14 @@ result=cursor.fetchall()
 for a in result:
     lang[a['language']]+=1
 
-top3=sorted(lang.items(), key=lambda x: x[1], reverse=True)[0:3]
-top3=dict(top3)
-lang_top3=list(top3.keys())
-lang_value_top3=list(top3.values())
+top5=sorted(lang.items(), key=lambda x: x[1], reverse=True)[0:5]
+top5=dict(top5)
+lang_top5=list(top5.keys())
+lang_value_top5=list(top5.values())
 
-x=np.arange(3)
+x=np.arange(5)
 
-plt.bar(x, lang_value_top3)
-plt.xticks(x, lang_top3)
+plt.bar(x, lang_value_top5)
+plt.xticks(x, lang_top5)
 plt.savefig('connector/graph.png')
 plt.show()
