@@ -18,7 +18,7 @@ var css3;
 var register;
 var findid;
 var findpw,findpw1,mail_auth,changepw;
-var main,view_all_contents,posting,eidtinfor;
+var main,view_all_contents,posting,eidtinfor,ranking;
 fs.readFile('temp_main.html','utf8',function(err,data){
     if(err){
         return console.error(err);
@@ -103,6 +103,12 @@ fs.readFile('editinfor.html','utf8',function(err,data){
     }
     eidtinfor=data;
 });
+fs.readFile('ranking.html','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    ranking=data;
+});
 
 var user=mysql.createConnection({
     host : db_set.host,
@@ -143,6 +149,11 @@ server.get('/posting.css',function(request,response){
     response.write(css3);
     response.end();
 });//complete
+server.get('/ranking',(request,response)=>{
+    response.writeHead(200,{"Content-Type":"text/html"});
+    response.write(ranking);
+    response.end();
+});
 server.get('/posting',function(request,response){
     if(request.cookies.id){
         user.query("select *from user where id=?",[request.cookies.id],(err,result)=>{
