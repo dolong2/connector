@@ -19,6 +19,7 @@ var register;
 var findid;
 var findpw,findpw1,mail_auth,changepw;
 var main,view_all_contents,posting,eidtinfor,ranking;
+var lang_graph;
 fs.readFile('temp_main.html','utf8',function(err,data){
     if(err){
         return console.error(err);
@@ -109,6 +110,12 @@ fs.readFile('ranking.html','utf8',function(err,data){
     }
     ranking=data;
 });
+fs.readFile('language_graph.png','utf8',function(err,data){
+    if(err){
+        return console.error(err);
+    }
+    lang_graph=data;
+});
 
 var user=mysql.createConnection({
     host : db_set.host,
@@ -149,6 +156,11 @@ server.get('/posting.css',function(request,response){
     response.write(css3);
     response.end();
 });//complete
+server.get('/language_graph.png',(request,response)=>{
+    response.writeHead(200, {"Content-Type": "image/png"});
+    response.write(lang_graph);
+    response.end();
+});
 server.get('/ranking',(request,response)=>{
     response.writeHead(200,{"Content-Type":"text/html"});
     response.write(ranking);
