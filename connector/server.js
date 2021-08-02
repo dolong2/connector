@@ -157,15 +157,19 @@ server.get('/posting.css',function(request,response){
     response.end();
 });//complete
 server.get('/language_graph.png',(request,response)=>{
-    response.writeHead(200, {"Content-Type": "image/png"});
-    response.write(lang_graph);
-    response.end();
-});
+    console.log("이미지 로딩시도함");
+    fs.readFile('./language_graph.png', function(error,data){
+        response.writeHead(200, {"Content-Type":"image/png"});
+        response.write(data);
+        response.end();
+        console.log('이미지 전송완료'); 
+    });
+});//compelete
 server.get('/ranking',(request,response)=>{
     response.writeHead(200,{"Content-Type":"text/html"});
     response.write(ranking);
     response.end();
-});
+});//compelete
 server.get('/posting',function(request,response){
     if(request.cookies.id){
         user.query("select *from user where id=?",[request.cookies.id],(err,result)=>{
