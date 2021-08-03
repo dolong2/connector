@@ -4,7 +4,7 @@ const app = express();
 const http = require("http");
 const server = http.createServer(app);
 var io=require('socket.io')(server);
-var db_set=require('./db_infor.json');
+var db_set=require('../db_infor.json');
 var mysql=require("mysql");
 
 let roomname;
@@ -16,7 +16,7 @@ var user=mysql.createConnection({
 });
 app.get("/:id", (req, res) => {
     if(req.url=='/chat.js'){
-        fs.readFile("./chat.js", (error, data) => {
+        fs.readFile("../public/chat.js", (error, data) => {
             if (error) {
                 console.log(error);
                 return res.sendStatus(500);
@@ -26,7 +26,7 @@ app.get("/:id", (req, res) => {
         });
     }
     else if(req.url=='/chat.css'){
-        fs.readFile("./chat.css", (error, data) => {
+        fs.readFile("../public/chat.css", (error, data) => {
             if (error) {
                 console.log(error);
                 return res.sendStatus(500);
@@ -36,7 +36,7 @@ app.get("/:id", (req, res) => {
         });
     }
     else{
-        fs.readFile("./chat.html", (error, data) => {
+        fs.readFile("../public/chat.html", (error, data) => {
             if (error) {
                 console.log(error);
                 return res.sendStatus(500);

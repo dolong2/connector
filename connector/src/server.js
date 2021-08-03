@@ -3,8 +3,8 @@ const fs=require('fs');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
-var db_set=require('./db_infor.json');
-var mail_set=require('./mail_infor.json');
+var db_set=require('../db_infor.json');
+var mail_set=require('../mail_infor.json');
 var ejs=require('ejs');
 var mysql=require("mysql");
 var cookieParser = require('cookie-parser');
@@ -20,97 +20,97 @@ var findid;
 var findpw,findpw1,mail_auth,changepw;
 var main,view_all_contents,posting,eidtinfor,ranking;
 var lang_graph;
-fs.readFile('temp_main.html','utf8',function(err,data){
+fs.readFile('../public/temp_main.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     main=data;
 });
-fs.readFile('Li.html','utf8',function(err,data){
+fs.readFile('../public/Li.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     Li=data;
 });
-fs.readFile('register.html','utf8',function(err,data){
+fs.readFile('../public/register.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     register=data;
 });
-fs.readFile('findid.html','utf8',function(err,data){
+fs.readFile('../public/findid.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     findid=data;
 });
-fs.readFile('findpw.html','utf8',function(err,data){
+fs.readFile('../public/findpw.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     findpw=data;
 });
-fs.readFile('findpw1.html','utf8',function(err,data){
+fs.readFile('../public/findpw1.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     findpw1=data;
 });
-fs.readFile('mail_auth.html','utf8',function(err,data){
+fs.readFile('../public/mail_auth.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     mail_auth=data;
 });
-fs.readFile('view_all_contents.html','utf8',function(err,data){
+fs.readFile('../public/view_all_contents.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     view_all_contents=data;
 });
-fs.readFile('change_pw.html','utf8',function(err,data){
+fs.readFile('../public/change_pw.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     changepw=data;
 });
-fs.readFile('posting.html','utf8',function(err,data){
+fs.readFile('../public/posting.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     posting=data;
 });
-fs.readFile('Li.css','utf8',function(err,data){
+fs.readFile('../public/Li.css','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     css=data;
 });
-fs.readFile('posting.css','utf8',function(err,data){
+fs.readFile('../public/posting.css','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     css3=data;
 });
-fs.readFile('main_1.css','utf8',function(err,data){
+fs.readFile('../public/main_1.css','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     css2=data;
 });
-fs.readFile('editinfor.html','utf8',function(err,data){
+fs.readFile('../public/editinfor.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     eidtinfor=data;
 });
-fs.readFile('ranking.html','utf8',function(err,data){
+fs.readFile('../public/ranking.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     ranking=data;
 });
-fs.readFile('language_graph.png','utf8',function(err,data){
+fs.readFile('../public/language_graph.png','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
