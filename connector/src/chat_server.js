@@ -36,7 +36,7 @@ app.get("/:id", (req, res) => {
         });
     }
     else{
-        fs.readFile("../public/chat.html", (error, data) => {
+        fs.readFile("../public/html/chat.html", (error, data) => {
             if (error) {
                 console.log(error);
                 return res.sendStatus(500);

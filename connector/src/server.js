@@ -20,61 +20,61 @@ var findid;
 var findpw,findpw1,mail_auth,changepw;
 var main,view_all_contents,posting,eidtinfor,ranking;
 var lang_graph;
-fs.readFile('../public/temp_main.html','utf8',function(err,data){
+fs.readFile('../public/html/temp_main.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     main=data;
 });
-fs.readFile('../public/Li.html','utf8',function(err,data){
+fs.readFile('../public/html/Li.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     Li=data;
 });
-fs.readFile('../public/register.html','utf8',function(err,data){
+fs.readFile('../public/html/register.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     register=data;
 });
-fs.readFile('../public/findid.html','utf8',function(err,data){
+fs.readFile('../public/html/findid.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     findid=data;
 });
-fs.readFile('../public/findpw.html','utf8',function(err,data){
+fs.readFile('../public/html/findpw.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     findpw=data;
 });
-fs.readFile('../public/findpw1.html','utf8',function(err,data){
+fs.readFile('../public/html/findpw1.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     findpw1=data;
 });
-fs.readFile('../public/mail_auth.html','utf8',function(err,data){
+fs.readFile('../public/html/mail_auth.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     mail_auth=data;
 });
-fs.readFile('../public/view_all_contents.html','utf8',function(err,data){
+fs.readFile('../public/html/view_all_contents.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     view_all_contents=data;
 });
-fs.readFile('../public/change_pw.html','utf8',function(err,data){
+fs.readFile('../public/html/change_pw.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     changepw=data;
 });
-fs.readFile('../public/posting.html','utf8',function(err,data){
+fs.readFile('../public/html/posting.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
@@ -98,13 +98,13 @@ fs.readFile('../public/css/main_1.css','utf8',function(err,data){
     }
     css2=data;
 });
-fs.readFile('../public/editinfor.html','utf8',function(err,data){
+fs.readFile('../public/html/editinfor.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     eidtinfor=data;
 });
-fs.readFile('../public/ranking.html','utf8',function(err,data){
+fs.readFile('../public/html/ranking.html','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
