@@ -16,7 +16,7 @@ var user=mysql.createConnection({
 });
 app.get("/:id", (req, res) => {
     if(req.url=='/chat.js'){
-        fs.readFile("../public/chat.js", (error, data) => {
+        fs.readFile("../public/js/chat.js", (error, data) => {
             if (error) {
                 console.log(error);
                 return res.sendStatus(500);
@@ -26,7 +26,7 @@ app.get("/:id", (req, res) => {
         });
     }
     else if(req.url=='/chat.css'){
-        fs.readFile("../public/chat.css", (error, data) => {
+        fs.readFile("../public/css/chat.css", (error, data) => {
             if (error) {
                 console.log(error);
                 return res.sendStatus(500);

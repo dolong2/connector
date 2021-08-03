@@ -80,19 +80,19 @@ fs.readFile('../public/posting.html','utf8',function(err,data){
     }
     posting=data;
 });
-fs.readFile('../public/Li.css','utf8',function(err,data){
+fs.readFile('../public/css/Li.css','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     css=data;
 });
-fs.readFile('../public/posting.css','utf8',function(err,data){
+fs.readFile('../public/css/posting.css','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
     css3=data;
 });
-fs.readFile('../public/main_1.css','utf8',function(err,data){
+fs.readFile('../public/css/main_1.css','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
@@ -110,7 +110,7 @@ fs.readFile('../public/ranking.html','utf8',function(err,data){
     }
     ranking=data;
 });
-fs.readFile('../public/language_graph.png','utf8',function(err,data){
+fs.readFile('../language_graph.png','utf8',function(err,data){
     if(err){
         return console.error(err);
     }
