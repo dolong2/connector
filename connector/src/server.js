@@ -3,8 +3,8 @@ const fs=require('fs');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
-var db_set=require('../db_infor.json');
-var mail_set=require('../mail_infor.json');
+var db_set=require('../json/db_infor.json');
+var mail_set=require('../json/mail_infor.json');
 var ejs=require('ejs');
 var mysql=require("mysql");
 var cookieParser = require('cookie-parser');
