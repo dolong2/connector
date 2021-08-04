@@ -110,12 +110,6 @@ fs.readFile('../public/html/ranking.html','utf8',function(err,data){
     }
     ranking=data;
 });
-fs.readFile('../language_graph.png','utf8',function(err,data){
-    if(err){
-        return console.error(err);
-    }
-    lang_graph=data;
-});
 
 var user=mysql.createConnection({
     host : db_set.host,
