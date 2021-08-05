@@ -19,7 +19,6 @@ var register;
 var findid;
 var findpw,findpw1,mail_auth,changepw;
 var main,view_all_contents,posting,eidtinfor,ranking;
-var lang_graph;
 fs.readFile('../public/html/temp_main.html','utf8',function(err,data){
     if(err){
         return console.error(err);
