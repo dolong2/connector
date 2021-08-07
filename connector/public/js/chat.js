@@ -13,8 +13,8 @@ let socket;
                 socket.on('message', (name,content) => {
                     makeChatDiv(name, content);
                 });
-                socket.on('exit_chat',()=>{
-                    makeExitDiv();
+                socket.on('exit_chat',(name)=>{
+                    makeExitDiv(name);
                 });
             }
 			// 버튼 클릭 시 메시지 송신
@@ -80,7 +80,11 @@ let socket;
                 let div=document.createElement('div');
                 div.className="enter"
                 let nameP=document.createElement('p');
-                nameP.innerHTML='퇴장하셨습니다';
+                nameP.innerHTML=name+'님이 퇴장하셨습니다';
                 div.appendChild(nameP);
                 document.getElementById('chatbox').appendChild(div);
             };
+            function exit(){
+                var id=getCookie("id");
+                socket.emit('exit',id);
+            }

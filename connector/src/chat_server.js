@@ -4,7 +4,7 @@ const app = express();
 const http = require("http");
 const server = http.createServer(app);
 var io=require('socket.io')(server);
-var db_set=require('../db_infor.json');
+var db_set=require('../json/db_infor.json');
 var mysql=require("mysql");
 
 let roomname;
@@ -69,7 +69,11 @@ io.sockets.on("connection", (socket) => {
     });
     socket.on('disconnect',()=>{
         console.log('연결이 끊김');
-        io.to(roomname).emit('exit_chat');
+    });
+    socket.on('exit',(id)=>{
+        user.query("select name from user where id=?",[id],(err,result)=>{
+            io.to(roomname).emit('exit_chat',result[0].name);
+        })
     });
 });
 
