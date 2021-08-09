@@ -31,6 +31,10 @@ let socket;
                     content
                 });
             }
+            function exit(){
+                var id=getCookie("id");
+                socket.emit('exit',id);
+            }
             function getCookie(name) {
                 var nameOfCookie = name + "=";
                 var x = 0;
@@ -84,7 +88,3 @@ let socket;
                 div.appendChild(nameP);
                 document.getElementById('chatbox').appendChild(div);
             };
-            function exit(){
-                var id=getCookie("id");
-                socket.emit('exit',id);
-            }
