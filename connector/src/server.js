@@ -419,3 +419,4 @@ server.post('/findpw|',function(request,response){
         response.send('<script type="text/javascript">alert("인증번호가 올바르지않습니다");document.location.href="/findpw|";</script>');
     }
 });//complete
+//test
